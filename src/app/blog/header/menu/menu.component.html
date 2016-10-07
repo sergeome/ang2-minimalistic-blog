@@ -1,12 +1,10 @@
 <div class="menu-wrapper">
-  <a class="mobile-menu-switcher" href="javascript:void(0);" onclick="mobileMenuAction()">&#9776;</a>
-  <ul class="top-menu">
-    <li><a href="#">Lorem</a></li>
-    <li><a href="#">Ipsum</a></li>
-    <li><a href="#">Dolor</a></li>
-    <li><a href="#">Sit Amet</a></li>
-    <li><a href="#">Sit Amet</a></li>
-    <li><a href="#">Sit Amet</a></li>
-    <li><a href="#">Sit Amet</a></li>
+  <a class="mobile-menu-switcher" (click)="isResponsive = !isResponsive;">&#9776;</a>
+  <ul class="top-menu" [class.responsive]="isResponsive">
+    <li><a [routerLink]="['']">All Posts</a></li>
+    <li><a [routerLink]="['']">Popular Posts</a></li>
+    <li><a [routerLink]="['/singlepost']">Single Post</a></li>
+    <li><a [routerLink]="['/addpost']">Add Post</a></li>
+    <li><a [routerLink]="['/login']">Login</a></li>
   </ul>
 </div>
