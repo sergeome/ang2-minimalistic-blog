@@ -9,8 +9,11 @@ import { FooterComponent } from './footer/footer.component';
 import { SearchComponent } from './header/search/search.component';
 import { MenuComponent } from './header/menu/menu.component';
 import { LoginComponent } from './login/login.component';
-import { PostsListComponent } from './posts/posts-list/posts-list.component';
 import { AddPostComponent } from './posts/add-post/add-post.component';
+import { AllPostsComponent } from './posts/all-posts/all-posts.component';
+import { routing } from "./app.routing";
+import { LoginService } from "./service/login.service";
+
 
 @NgModule({
   declarations: [
@@ -20,15 +23,18 @@ import { AddPostComponent } from './posts/add-post/add-post.component';
     SearchComponent,
     MenuComponent,
     LoginComponent,
-    PostsListComponent,
-    AddPostComponent
+    AddPostComponent,
+    AllPostsComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    routing
   ],
-  providers: [],
+  providers: [
+    LoginService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
