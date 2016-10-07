@@ -1,3 +1,325 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,400italic);
+
+@import 'https://fonts.googleapis.com/css?family=Merriweather:300,400';
+
+/*
+Color schema
+#0D415C - DARK IMPERIAL BLUE - Main Color
+#FFFFFF - White - background color
+#00171F - Rich Black - Font color
+#007EA7 - cerulian - blue
+#00A8E8 - white blie
+*/
+
+/*Color schema 2
+#FFFFFF - background
+#223139 - Footer
+#353531 - Text color
+#16425B - Links
+#0D0A0B - Black
+
+#1b729b - hover
+*/
+
+/*CSS Common declaration 2
+*/
+*{
+    margin: 0;
+    padding: 0;
+}
+img {
+    border: 0;
+}
+ul li {
+    list-style: none;
+}
+@font-face {
+    font-family: "Gotham Bold";
+    src: url("/fonts/GOTHAM-BOLD.TTF");
+}
+@font-face {
+    font-family: "Gotham Thin";
+    src: url("/fonts/GOTHAM-THIN.TTF");
+}
+body {
+    font-family: "Roboto", sans-serif;
+}
+a {
+    text-decoration: none;
+    color: #ffffff;
+}
+h3{
+    font: 700 30px "Roboto", sans-serif;;
+    text-align: center;
+    color: #353531;
+}
+p {
+    font-family: "Roboto", sans-serif;
+    color: #ffffff;
+}
+h1 {
+    font-family: "Gotham Bold", sans-serif;
+    font-size: 24px;
+}
+h2 {
+    font-family: "Gotham Thin", sans-serif;
+    font-size: 13px;
+}
+h4 {
+    font-size: 24px;
+    font-weight: 300;
+}
+h5 {
+    font-weight: 500;
+    font-size: 36px;
+}
+
+
+/*HEADER section*/
+header {
+    width: 100%;
+    overflow: hidden;
+    padding: 22px 0;
+}
+.header-wrapper {
+    overflow: hidden;
+    max-width: 1140px;
+    margin: 0 auto;
+}
+.logo {
+    display: block;
+    float: left;
+    margin: 0 0 20px 0;
+}
+.logo img {
+    border-radius: 50%;
+}
+.title {
+    display: block;
+    float: left;
+}
+.title h1 {
+    color: #16425B;
+    transition: .3s;
+}
+.title h1:hover{
+    color: #1b729b;
+}
+.title h2 {
+    color: #223139;
+    margin: 8px 0 0 0;
+    transition: .3s;
+    position: relative;
+}
+.title h2:hover{
+    padding: 0 0 0 20px;
+}
+.title h2:hover:before {
+    content: " ";
+    position: absolute;
+    background: url("/images/return.png") no-repeat top center;
+    width: 16px;
+    height: 16px;
+    top: 0;
+    left: 0;
+}
+
+/*Search*/
+header .search {
+    float: right;
+    margin: 14px 0 0 0;
+}
+header input[type="text"] {
+    background: url("/images/search.png") no-repeat right 3px;
+    color: #0d415c;
+    border: none;
+    outline: none;
+    font-family: "Roboto", sans-serif;
+    font-size: 17px;
+    cursor: pointer;
+    transition: .3s ;
+    width: 16px;
+}
+header input[type="text"]:focus{
+    background-position: left 3px;
+    padding-left: 30px;
+    width: 140px;
+}
+
+/*Menu*/
+.mobile-menu-switcher{
+    display: none;
+    line-height: 50px;
+}
+.menu-wrapper{
+    clear: both;
+    border-top: 1px solid #c9d4da;
+    border-bottom: 1px solid #c9d4da;
+}
+.top-menu {
+    display: table;
+    clear: both;
+    overflow: hidden;
+    margin: 0 auto;
+    text-transform: uppercase;
+    font-family: "Roboto", sans-serif;
+    font-size: 17px;
+}
+.top-menu li {
+    display: inline-block;
+    float: left;
+    position: relative;
+}
+.top-menu li:after {
+    content: "/";
+    position: absolute;
+    right: 0;
+    top: 7px;
+    color: #16425B;
+}
+.top-menu li:last-child:after {
+    display: none;
+}
+.top-menu li:last-child {
+    background: none;
+}
+.top-menu li a {
+    display: block;
+    position: relative;
+    padding: 8px 20px;
+    color: #16425B;
+    transition: .2s;
+}
+.top-menu li a:after {
+    content: " ";
+    position: absolute;
+    margin: 0 20px;
+    bottom: 8px;
+    left: 0;
+    width: calc(100% - 40px);
+    height: 1px;
+    transition: 1s;
+}
+.top-menu li a:hover:after{
+    background: #16425B;
+}
+/*.top-menu li.active {*/
+/*float: left;*/
+/*border-radius: 5px;*/
+/*}*/
+/*.top-menu li.active a {*/
+/*color: #16425B;*/
+/*}*/
+/*.top-menu li:hover {*/
+/*border-radius: 5px;*/
+/*}*/
+.top-menu li a:hover {
+    color: #1b729b;
+}
+
+
+/*ALL POSTS section*/
+article {
+    max-width: 740px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.04);
+    border: 1px solid #c9d4da;
+    margin: 20px auto;
+    padding: 20px;
+    overflow: hidden;
+}
+article h3 {
+    margin: 20px 0 10px;
+}
+article p {
+    margin: 29px 0 0 0;
+    font: 400 16px/23px 'Merriweather', serif;
+    color: #616161;
+}
+article p a {
+    color: #16425B;
+    font-style: italic;
+    text-decoration: underline;
+}
+article p a:hover{
+    color: #1b729b;
+}
+.post-date {
+    float: left;
+    margin: 0 10px 0 0;
+    color: #16425B;
+    font-style: italic;
+}
+.post-image{
+    width: 450px;
+    height: auto;
+    margin: 30px auto;
+}
+article img {
+    width: 100%;
+}
+ul.tags-list li{
+    display: inline-block;
+}
+ul.tags-list li a{
+    display: block;
+    background: #16425B;
+    padding: 3px 10px 3px 25px;
+    border-radius: 5%;
+    color: #fff;
+    font-size: 13px;
+    margin: 10px 5px 0 0;
+    transition: .3s;
+    position: relative;
+    line-height: 17px;
+}
+ul.tags-list li a:hover{
+    background: #223139;
+}
+ul.tags-list li a:before{
+    content: " ";
+    position: absolute;
+    background: url("/images/tag.png") no-repeat top center;
+    width: 16px;
+    height: 16px;
+    left: 5px;
+    top: 4px;
+}
+
+.content p{
+    color: #353531;
+    margin: 20px 0;
+}
+.read-more {
+    float: right;
+    color: #16425B;
+    position: relative;
+    transition: .3s;
+    margin: 7px 0 0 10px;
+    text-transform: uppercase;
+}
+.read-more:hover {
+    padding: 0 20px 0 0;
+}
+.read-more:hover:after {
+    content: " ";
+    position: absolute;
+    background: url("/images/read-more-hover.png") no-repeat top center;
+    width: 16px;
+    height: 16px;
+    right: 0;
+    bottom: 2px;
+    transition: .3s;
+}
+
+/*Single post*/
+.single-post .tags-list{
+    margin: 40px 0 0 0;
+}
+.single-post article p {
+    font: 400 17px/30px 'Merriweather', serif;
+}
+
+/*Login page*/
 body.login {
     background: #16425B;
 }
@@ -94,4 +416,79 @@ body.login .container .info span a {
 }
 body.login .container .info span .fa {
     color: #EF3B3A;
+}
+
+/*Footer section*/
+footer{
+    width: 100%;
+    background: #223139;;
+}
+.footer-wrapper{
+    padding: 25px 0;
+    max-width: 1140px;
+    background: #223139;
+    text-align: center;
+    margin: 0 auto;
+}
+/*copyright*/
+.copyright {
+    font-size: 12px;
+}
+.copyright a{
+    position: relative;
+}
+.copyright a:after {
+    content: " ";
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: #5b7481;
+    transition: 1s;
+}
+.copyright a:hover:after{
+    background: #fff;
+}
+.back{
+    position: fixed;
+    background: url("/images/arrowup.png");
+    width: 64px;
+    height: 64px;
+    right: 20px;
+    bottom: 20px;
+    opacity: 0.7;
+}
+.back:hover {
+    opacity: 1;
+}
+.page-load {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('/images/page-loader.gif') 50% 50% no-repeat rgb(249,249,249);
+}
+
+/*404 headers*/
+.not-found {
+    width: 70%;
+    margin: 10% 0 0 15%;
+}
+.title-404{
+    color: #000;
+    font-size: 400%;
+    text-align: center;
+    margin: 0 0 40px 0;
+}
+.description-404 {
+    color: #000;
+    text-align: center;
+    line-height: 45px;
+    margin: 0 0 30px 0;
+}
+.not-found .top-menu li a {
+    color: #000;
 }

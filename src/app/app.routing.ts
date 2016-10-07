@@ -1,9 +1,10 @@
 import { Routes, RouterModule } from "@angular/router";
 import { LoginComponent } from "./login/login.component";
-import { AllPostsComponent } from "./posts/all-posts/all-posts.component";
+import { HomePageComponent } from "./blog/homepage/homepage.component";
+import { BLOG_ROUTES } from "./blog/blog.routing";
 
 const APP_ROUTES: Routes = [
-  { path: '', component: AllPostsComponent },
+  { path: '', component: HomePageComponent, children: BLOG_ROUTES},
   { path: 'login', component: LoginComponent }
 ];
 

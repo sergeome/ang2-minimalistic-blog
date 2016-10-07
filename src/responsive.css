@@ -1,0 +1,133 @@
+/*Adding left indent for header and skills*/
+@media screen and (max-width: 1170px) {
+    .header-wrapper{
+        margin: 0 2%;
+    }
+}
+
+@media screen and (max-width: 815px) {
+    /*Added article margin for small resolution*/
+    article{
+        margin: 20px 2%;
+    }
+
+
+    /*Responsive login page*/
+    body.login .login-page {
+        width: 100%;
+        padding: 25% 20px 0;
+        margin: auto;
+        box-sizing: border-box;
+    }
+    body.login .form {
+        position: relative;
+        z-index: 1;
+        max-width: 100%;
+        margin: 0 auto 50px;
+        padding: 45px;
+    }
+}
+
+
+/*Menu restyle and reduce social icons margin*/
+@media screen and (max-width: 780px) {
+
+    .top-menu li:not(:last-child) {
+        background: none;
+    }
+    /*Hide elements on the main menu*/
+    ul.top-menu {
+        display: none;
+    }
+
+    /*********************************/
+
+    /*Styles for the mobile menu icon*/
+    .mobile-menu-switcher {
+        display: block;
+        text-align: center;
+        font-size: 30px;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+        color: #0d415c;
+    }
+
+    /*Create mobile menu name "responsive" and overwrite styles of top-menu*/
+    ul.top-menu.responsive {
+        clear: both;
+        display: block;
+        float: none;
+        overflow: hidden;
+    }
+    ul.top-menu.responsive li {
+        clear: both;
+        display: block;
+        float: none;
+        overflow: hidden;
+        text-align: center;
+        border-top: 1px solid rgba(118, 161, 184, .2);
+    }
+    ul.top-menu.responsive li:after{
+        display: none;
+    }
+    ul.top-menu.responsive li:first-child {
+        border-top: none;
+    }
+    ul.top-menu.responsive li.active {
+        background: none;
+    }
+    ul.top-menu.responsive li.active a{
+        color: #ffffff;
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+    ul.top-menu.responsive li a{
+        -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+    ul.top-menu.responsive li a:after{
+        display: none;
+    }
+    ul.top-menu.responsive li:hover {
+        background: none;
+    }
+    ul.top-menu.responsive li:first-child{
+        background: none;
+    }
+}
+@media screen and (max-width: 772px) {
+    article {
+        margin: 20px 2%;
+    }
+}
+
+/*Redefine styles for the mobile version*/
+@media screen and (max-width: 715px) {
+
+    /*Fonts overwriting*/
+    h3 {
+        font-size: 25px;
+        margin: 20px 0 20px;
+    }
+    .post-date{
+        float: none;
+        text-align: center;
+    }
+
+    /*Modifying styles for CONTACT section*/
+    footer {
+        padding: 6% 0;
+    }
+    .footer-wrapper {
+        padding: 0 10%;
+        margin: 0 auto;
+    }
+    .footer-wrapper h5 {
+        margin: 0 0 15px 0;
+    }
+
+}
+
+/*Post image fixing for the small resolution*/
+@media screen and (max-width: 510px) {
+    .post-image {
+        width: 100%;
+    }
+}
