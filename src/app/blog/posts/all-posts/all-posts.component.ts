@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AddBodyClassService } from "../../service/add-body-class.service";
 
 @Component({
   selector: 'app-all-posts',
@@ -8,14 +7,10 @@ import { AddBodyClassService } from "../../service/add-body-class.service";
 })
 export class AllPostsComponent implements OnInit {
 
-  constructor(private addBodyClassService:AddBodyClassService) { }
+  constructor() { }
 
   ngOnInit() {
-    this.addBodyClassService.allPostsPageState(true);
-  }
 
-  ngOnDestroy() {
-    this.addBodyClassService.allPostsPageState(false);
   }
 
 }

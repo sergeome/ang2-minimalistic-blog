@@ -21,7 +21,6 @@ import { routing } from "./app.routing";
 import { LoginService } from "./service/login.service";
 import { SinglePostComponent } from './blog/posts/single-post/single-post.component';
 import { HomePageComponent } from './blog/homepage/homepage.component';
-import { AddBodyClassService } from "./blog/service/add-body-class.service";
 import { NotFoundComponent } from './blog/not-found/not-found.component';
 
 
@@ -46,8 +45,7 @@ import { NotFoundComponent } from './blog/not-found/not-found.component';
     routing,
   ],
   providers: [
-    LoginService,
-    AddBodyClassService
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

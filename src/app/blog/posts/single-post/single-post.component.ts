@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AddBodyClassService } from "../../service/add-body-class.service";
 
 @Component({
   selector: 'app-single-post',
@@ -8,14 +7,8 @@ import { AddBodyClassService } from "../../service/add-body-class.service";
 })
 export class SinglePostComponent implements OnInit {
 
-  constructor(private addBodyClassService:AddBodyClassService) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.addBodyClassService.singlePostState(true);
-  }
-
-  ngOnDestroy() {
-    this.addBodyClassService.singlePostState(false);
-  }
+  ngOnInit() {}
 
 }
