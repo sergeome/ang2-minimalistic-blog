@@ -22,6 +22,7 @@ import { LoginService } from "./service/login.service";
 import { SinglePostComponent } from './blog/posts/single-post/single-post.component';
 import { HomePageComponent } from './blog/homepage/homepage.component';
 import { AddBodyClassService } from "./blog/service/add-body-class.service";
+import { NotFoundComponent } from './blog/not-found/not-found.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { AddBodyClassService } from "./blog/service/add-body-class.service";
     AllPostsComponent,
     SinglePostComponent,
     HomePageComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
