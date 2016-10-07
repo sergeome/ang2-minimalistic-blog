@@ -8,8 +8,6 @@ import { LoginService } from "../service/login.service";
 })
 export class LoginComponent implements OnInit {
 
-  isLogin = true;
-
   constructor(private loginService: LoginService) {}
 
   ngOnInit() {
