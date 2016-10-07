@@ -7,6 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchComponent implements OnInit {
 
+  placeholderValue = "";
+
+  enablePlaceholder(){
+    this.placeholderValue = "search on blog...";
+  }
+
+  disablePlaceholder(){
+    this.placeholderValue = "";
+  }
+
+
   constructor() { }
 
   ngOnInit() {
