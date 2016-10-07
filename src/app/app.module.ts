@@ -1,7 +1,7 @@
 //System Modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 //Main Component
@@ -23,7 +23,6 @@ import { SinglePostComponent } from './blog/posts/single-post/single-post.compon
 import { HomePageComponent } from './blog/homepage/homepage.component';
 import { NotFoundComponent } from './blog/not-found/not-found.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,11 +41,12 @@ import { NotFoundComponent } from './blog/not-found/not-found.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    routing,
+    ReactiveFormsModule,
+    routing
   ],
   providers: [
     LoginService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {  }
