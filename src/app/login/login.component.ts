@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, EventEmitter } from "@angular/core";
 import { LoginService } from "../service/login.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { Subscription, Observable } from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   //Verifying is authentication state for View Updating
   isAuthenticated: any = true;
 
-  redirectTimer: number = 5000;
+  redirectAfter: number = 3000;
+  timerRemains: number = this.redirectAfter;
 
   loginForm: FormGroup;
   private subscription: Subscription;
@@ -61,9 +62,18 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onRedirect(){
     var self = this;
+    this.getRemainingTime();
     setTimeout(function () {
       self.router.navigate(['/']);
-    }, this.redirectTimer);
+    }, this.timerRemains);
+  }
+
+  getRemainingTime(){
+    let timer = Observable.timer(1000,1000);
+    timer.subscribe( t => {
+      this.timerRemains -= 1000;
+    });
+    this.timerRemains = this.redirectAfter;
   }
 
   ngOnDestroy(){
