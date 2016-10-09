@@ -1,6 +1,6 @@
 <div class="login-page">
   <div class="form">
-    <form class="login-form" [formGroup]="loginForm">
+    <form class="login-form" [formGroup]="loginForm" *ngIf="!isAuthenticated">
       <input
               type="text"
               placeholder="username"
@@ -9,8 +9,9 @@
               type="password"
               placeholder="password"
               formControlName="password" >
-      <button (click)="onSubmit()" [disabled]="!loginForm.valid">login</button>
-      <p class="message">Currently only administrator can login</p>
+      <button (click)="onLogin()" [disabled]="!loginForm.valid">login</button>
+      <p class="message" *ngIf="!isLoginCorrect">Currently only administrator can login</p>
     </form>
+    <div class="authorized" *ngIf="isAuthenticated">You're currently logged in! Do you want <a href="#" (click)="onSignOut()" style="color: #0d415c">Sign out?</a></div>
   </div>
 </div>

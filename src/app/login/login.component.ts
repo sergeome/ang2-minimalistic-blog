@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from "../service/login.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -8,9 +9,12 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+
+  isLoginCorrect: any = true;
+  isAuthenticated: any = false;
   loginForm: FormGroup;
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: LoginService, private router:Router) {
     this.loginForm = new FormGroup({
       'email': new FormControl('', [
         Validators.required,
@@ -19,12 +23,25 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit(){
-    console.log( this.loginForm );
+  onLogin(){
+    this.isLoginCorrect = this.loginService.onLogin(this.loginForm.value)
+  }
+
+  onSignOut(){
+    this.loginService.onSignOut();
   }
 
   ngOnInit() {
     this.loginService.loginState(true);
+    this.loginService.isAuthorizedEmitter.subscribe(
+      (isAuthenticated) => {
+        this.isAuthenticated = isAuthenticated;
+      }
+    )
+  }
+
+  onRedirect(){
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy(){
