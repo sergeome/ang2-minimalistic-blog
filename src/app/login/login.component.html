@@ -3,11 +3,11 @@
     <form class="login-form" [formGroup]="loginForm" *ngIf="!isAuthenticated">
       <input
               type="text"
-              placeholder="username"
+              placeholder="Email..."
               formControlName="email"  >
       <input
               type="password"
-              placeholder="password"
+              placeholder="Password..."
               formControlName="password" >
       <button (click)="onLogin()" [disabled]="!loginForm.valid">login</button>
       <button type="button" [routerLink]="['']" style="margin-top: 15px">Back to blog</button>

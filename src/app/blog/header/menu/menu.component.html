@@ -5,7 +5,7 @@
     <li><a [routerLink]="['']">Popular Posts</a></li>
     <li><a [routerLink]="['/singlepost']">Single Post</a></li>
     <li><a [routerLink]="['/addpost']" *ngIf="isAuthenticated">Add Post</a></li>
-    <li><a style="cursor: pointer" (click)="onLogout()" *ngIf="isAuthenticated">Logout</a></li>
-    <li><a [routerLink]="['/login']" *ngIf="!isAuthenticated">Login</a></li>
+    <li *ngIf="isAuthenticated" ><a style="cursor: pointer" (click)="onLogout()" >Logout</a></li>
+    <li *ngIf="!isAuthenticated" ><a [routerLink]="['/login']">Login</a></li>
   </ul>
 </div>
