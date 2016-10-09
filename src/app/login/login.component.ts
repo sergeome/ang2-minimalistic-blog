@@ -39,15 +39,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loginService.loginState(true);
-    this.loginService.isAuthorizedEmitter.subscribe(
-      (isLoginSuccessful) => {
-        if (isLoginSuccessful){
-          this.isLoginCorrect = true;
-        } else {
-          this.isLoginCorrect = false;
-        }
-      }
-    )
   }
 
   onRedirect(){
