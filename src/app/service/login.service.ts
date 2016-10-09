@@ -9,6 +9,7 @@ declare var firebase: any;
 export class LoginService {
   constructor() {}
 
+  isLoginSucessful = true;
   loginEmitter = new EventEmitter<boolean>();
 
   loginState( loginState ) {
@@ -16,12 +17,15 @@ export class LoginService {
   }
 
   onLogin( user: User ) {
+    var self = this;
     firebase.auth().signInWithEmailAndPassword( user.email, user.password )
       .then(function () {
       console.log( "Service - User was signed in" );
     }, function (error) {
         console.log( "Service - User wasn't signed in" );
         console.log( error );
+        return self.isLoginSucessful = false;
+      //  TODO - on successful login error appears.
       });
   }
 
@@ -38,9 +42,9 @@ export class LoginService {
     const subject = new Subject<boolean>();
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        this.subject.next(true);
+        subject.next(true);
       } else {
-        this.subject.next(false);
+        subject.next(false);
       }
     });
     return subject.asObservable();

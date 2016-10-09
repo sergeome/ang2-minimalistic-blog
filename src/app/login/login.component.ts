@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onLogin(){
-    this.loginService.onLogin(this.loginForm.value);
+    this.isLoginCorrect = this.loginService.onLogin(this.loginForm.value);
   }
 
   onSignOut(){
