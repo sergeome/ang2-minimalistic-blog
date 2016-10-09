@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { LoginService } from "../service/login.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   isLoginCorrect: any = true;
-  isAuthenticated: any;
+  isAuthenticated: any = true;
   loginForm: FormGroup;
+  private subscription: Subscription;
 
   constructor(private loginService: LoginService, private router:Router) {
     this.loginForm = new FormGroup({
@@ -21,6 +23,10 @@ export class LoginComponent implements OnInit {
         Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]),
       'password': new FormControl('', Validators.required)
     });
+
+    this.subscription = this.loginService.isAuthenticated().subscribe(
+      authState => this.isAuthenticated = authState
+    )
   }
 
   onLogin(){
@@ -33,12 +39,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginService.loginState(true);
-    this.isAuthenticated = this.loginService.isAuthenticated();
     this.loginService.isAuthorizedEmitter.subscribe(
-      (isAuthenticated) => {
-        this.isAuthenticated = isAuthenticated;
-        if (!isAuthenticated) {
-          this.isLoginCorrect = isAuthenticated;
+      (isLoginSuccessful) => {
+        if (isLoginSuccessful){
+          this.isLoginCorrect = true;
+        } else {
+          this.isLoginCorrect = false;
         }
       }
     )

@@ -11,8 +11,8 @@
               formControlName="password" >
       <button (click)="onLogin()" [disabled]="!loginForm.valid">login</button>
       <button type="button" (click)="onRedirect()" style="margin-top: 15px">Back to blog</button>
-      <p class="message" *ngIf="!isLoginCorrect">Invalid Login Or Login</p>
+      <p class="message" *ngIf="!isLoginCorrect">Invalid Login Or Password</p>
     </form>
-    <div class="authorized" *ngIf="isAuthenticated">You're currently logged in! Do you want <a href="#" (click)="onSignOut()" style="color: #0d415c">Sign out</a> or <a href="#" (click)="onRedirect()" style="color: #0d415c">Return to a blog?</a></div>
+    <div class="authorized" *ngIf="isAuthenticated">You're currently logged in! Do you want <a href="#" (click)="onSignOut()" style="color: #0d415c" false>Sign out</a> or <a href="#" (click)="onRedirect()" style="color: #0d415c">Return to a blog?</a></div>
   </div>
 </div>

@@ -1,5 +1,6 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable, EventEmitter } from "@angular/core";
 import { User } from "../interfaces/user.interface";
+import { Subject, Observable } from "rxjs";
 
 declare var firebase: any;
 
@@ -12,6 +13,7 @@ export class LoginService {
   loginEmitter = new EventEmitter<boolean>();
   isAuthorizedEmitter = new EventEmitter<boolean>();
   isUserAuthorized: any;
+  subject = new Subject<boolean>();
 
   loginState( loginState ) {
     this.loginEmitter.emit( loginState );
@@ -31,21 +33,26 @@ export class LoginService {
   }
 
   onSignOut( ) {
+    var self = this;
     firebase.auth().signOut().then( function () {
       console.log( "Service - User was sign out" );
+      self.subject.next(false);
     }, function ( error ) {
       console.log( error );
       console.log( "Service - There was an error during singing out" );
     } );
   }
 
-  isAuthenticated() {
-    var user = firebase.auth().currentUser;
-    if (user) {
-      return true;
-    } else {
-      return false;
-    }
+  isAuthenticated(): Observable<boolean> {
+    var self = this;
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        self.subject.next(true);
+      } else {
+        self.subject.next(false);
+      }
+    });
+    return this.subject.asObservable();
   }
 
 
