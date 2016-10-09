@@ -8,7 +8,7 @@ declare var firebase: any;
 export class LoginService {
   constructor() {}
 
-  isLoginCorrect = true;
+  isLoginCorrect;
   loginEmitter = new EventEmitter<boolean>();
   isAuthorizedEmitter = new EventEmitter<boolean>();
   isUserAuthorized: any;
@@ -23,7 +23,6 @@ export class LoginService {
       .then(function () {
       console.log( "Service - User was signed in" );
         self.isAuthorizedEmitter.emit(true);
-        return self.isLoginCorrect = false;
     }, function (error) {
         console.log( "Service - User wasn't signed in" );
         console.log( error );
@@ -41,14 +40,12 @@ export class LoginService {
   }
 
   isAuthenticated() {
-    var self = this;
-    firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        self.isAuthorizedEmitter.emit(true);
-      } else {
-        self.isAuthorizedEmitter.emit(false);
-      }
-    });
+    var user = firebase.auth().currentUser;
+    if (user) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 

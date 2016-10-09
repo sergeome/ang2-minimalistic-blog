@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
 export class LoginComponent implements OnInit {
 
   isLoginCorrect: any = true;
-  isAuthenticated: any = false;
+  isAuthenticated: any;
   loginForm: FormGroup;
 
   constructor(private loginService: LoginService, private router:Router) {
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin(){
-    this.isLoginCorrect = this.loginService.onLogin(this.loginForm.value)
+    this.loginService.onLogin(this.loginForm.value);
   }
 
   onSignOut(){
@@ -33,9 +33,13 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.loginService.loginState(true);
+    this.isAuthenticated = this.loginService.isAuthenticated();
     this.loginService.isAuthorizedEmitter.subscribe(
       (isAuthenticated) => {
         this.isAuthenticated = isAuthenticated;
+        if (!isAuthenticated) {
+          this.isLoginCorrect = isAuthenticated;
+        }
       }
     )
   }
