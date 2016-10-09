@@ -22,11 +22,11 @@ export class LoginService {
     firebase.auth().signInWithEmailAndPassword( user.email, user.password )
       .then(function () {
       console.log( "Service - User was signed in" );
+        self.isLoginCorrectEmitter.emit(true);
     }, function (error) {
         console.log( "Service - User wasn't signed in" );
         console.log( error );
         self.isLoginCorrectEmitter.emit(false);
-      //  TODO - on successful login error appears.
       });
   }
 

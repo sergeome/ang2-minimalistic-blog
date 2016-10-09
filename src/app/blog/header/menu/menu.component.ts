@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from "rxjs";
+import { LoginService } from "../../../service/login.service";
 
 @Component({
   selector: 'app-menu',
@@ -8,7 +10,19 @@ import { Component, OnInit } from '@angular/core';
 export class MenuComponent implements OnInit {
 
   isResponsive = false;
-  constructor() { }
+
+  private subscription: Subscription;
+  isAuthenticated: any = true;
+
+  constructor(private loginService: LoginService) {
+    this.subscription = this.loginService.isAuthenticated().subscribe(
+      authState => this.isAuthenticated = authState
+    )
+  }
+
+  onLogout(){
+    this.loginService.onSignOut();
+  }
 
   ngOnInit() {
   }

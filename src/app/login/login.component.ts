@@ -11,8 +11,14 @@ import { Subscription } from "rxjs";
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
+  //Verifying is login correct for "Error Message" on invalid credentials
   isLoginCorrect: any = true;
+
+  //Verifying is authentication state for View Updating
   isAuthenticated: any = true;
+
+  redirectTimer: number = 5000;
+
   loginForm: FormGroup;
   private subscription: Subscription;
 
@@ -24,8 +30,14 @@ export class LoginComponent implements OnInit, OnDestroy {
       'password': new FormControl('', Validators.required)
     });
 
+    //Subscribing for the Authentication state changing
     this.subscription = this.loginService.isAuthenticated().subscribe(
-      authState => this.isAuthenticated = authState
+      (authState) => {
+        this.isAuthenticated = authState;
+        if (authState){
+          this.onRedirect();
+        }
+      }
     )
   }
 
@@ -38,17 +50,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    //Adding body class when component is loaded
     this.loginService.loginState(true);
+
+    //Subscribing for the Login Errors
     this.loginService.isLoginCorrectEmitter.subscribe(
       isLoginCorrect => this.isLoginCorrect = isLoginCorrect
     );
   }
 
   onRedirect(){
-    this.router.navigate(['/']);
+    var self = this;
+    setTimeout(function () {
+      self.router.navigate(['/']);
+    }, this.redirectTimer);
   }
 
   ngOnDestroy(){
+    //Removing body class when component is unloaded
     this.loginService.loginState(false);
   }
 

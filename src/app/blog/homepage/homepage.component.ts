@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HeaderComponent } from '../header/header.component.ts'
-import { FooterComponent } from '../footer/footer.component.ts'
 
 
 @Component({
@@ -10,9 +8,9 @@ import { FooterComponent } from '../footer/footer.component.ts'
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit() {
-  }
+  constructor() {}
+
+  ngOnInit() {}
 
 }
