@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onLogin(){
-    this.isLoginCorrect = this.loginService.onLogin(this.loginForm.value);
+    this.loginService.onLogin(this.loginForm.value);
   }
 
   onSignOut(){
@@ -39,6 +39,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loginService.loginState(true);
+    this.loginService.isLoginCorrectEmitter.subscribe(
+      isLoginCorrect => this.isLoginCorrect = isLoginCorrect
+    );
   }
 
   onRedirect(){

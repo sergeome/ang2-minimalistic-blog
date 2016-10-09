@@ -11,6 +11,7 @@ export class LoginService {
 
   isLoginSucessful = true;
   loginEmitter = new EventEmitter<boolean>();
+  isLoginCorrectEmitter = new EventEmitter<boolean>();
 
   loginState( loginState ) {
     this.loginEmitter.emit( loginState );
@@ -24,7 +25,7 @@ export class LoginService {
     }, function (error) {
         console.log( "Service - User wasn't signed in" );
         console.log( error );
-        return self.isLoginSucessful = false;
+        self.isLoginCorrectEmitter.emit(false);
       //  TODO - on successful login error appears.
       });
   }
