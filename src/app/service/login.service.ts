@@ -24,6 +24,7 @@ export class LoginService {
       .then(function () {
       console.log( "Service - User was signed in" );
         self.isLoginCorrectEmitter.emit(true);
+        return 
     }, function (error) {
         console.log( "Service - User wasn't signed in" );
         console.log( error );

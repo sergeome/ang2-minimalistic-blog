@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   timerRemains: number = this.redirectAfter;
 
   loginForm: FormGroup;
+
+  isLoading = false;
   private subscriptionForAuthState: Subscription;
 
   constructor(private loginService: LoginService, private router:Router) {
@@ -43,7 +45,15 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onLogin(){
+    this.onWaiting();
     this.loginService.onLogin(this.loginForm.value);
+  }
+
+  onWaiting(){
+    this.isLoading = true;
+    this.loginService.isLoginCorrectEmitter.subscribe(
+      isLoginCorrect => this.isLoading = false
+    );
   }
 
   ngOnInit() {
