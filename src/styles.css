@@ -550,6 +550,7 @@ footer{
     z-index: 9999;
     background: url('images/spinners.gif') 50% 50% no-repeat rgba(52,69,87,1);
     opacity: 0.8;
+    transition: hide;
 }
 
 
