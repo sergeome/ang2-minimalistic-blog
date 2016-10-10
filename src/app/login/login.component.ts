@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, EventEmitter } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { LoginService } from "../service/login.service";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   timerRemains: number = this.redirectAfter;
 
   loginForm: FormGroup;
-  private subscription: Subscription;
+  private subscriptionForAuthState: Subscription;
 
   constructor(private loginService: LoginService, private router:Router) {
     this.loginForm = new FormGroup({
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
 
     //Subscribing for the Authentication state changing
-    this.subscription = this.loginService.isAuthenticated().subscribe(
+    this.subscriptionForAuthState = this.loginService.isAuthenticated().subscribe(
       (authState) => {
         this.isAuthenticated = authState;
         if (authState){
@@ -44,10 +44,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onLogin(){
     this.loginService.onLogin(this.loginForm.value);
-  }
-
-  onSignOut(){
-    this.loginService.onSignOut();
   }
 
   ngOnInit() {

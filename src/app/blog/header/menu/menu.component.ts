@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { LoginService } from "../../../service/login.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-menu',
@@ -10,11 +11,12 @@ import { LoginService } from "../../../service/login.service";
 export class MenuComponent implements OnInit {
 
   isResponsive = false;
+  isSignOutSuccessful: boolean;
 
   private subscription: Subscription;
   isAuthenticated: any = true;
 
-  constructor(private loginService: LoginService) {
+  constructor(private loginService: LoginService, private router:Router) {
     this.subscription = this.loginService.isAuthenticated().subscribe(
       authState => this.isAuthenticated = authState
     )
@@ -22,9 +24,15 @@ export class MenuComponent implements OnInit {
 
   onLogout(){
     this.loginService.onSignOut();
+    if(this.isSignOutSuccessful){
+      this.router.navigate(['/']);
+    }
   }
 
   ngOnInit() {
+    this.isSignOutSuccessful = this.loginService.isSignOutSuccessful.subscribe(
+      signOutState => this.isSignOutSuccessful = signOutState
+    )
   }
 
 }

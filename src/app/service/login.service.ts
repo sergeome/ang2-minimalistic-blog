@@ -12,6 +12,7 @@ export class LoginService {
   isLoginSucessful = true;
   loginEmitter = new EventEmitter<boolean>();
   isLoginCorrectEmitter = new EventEmitter<boolean>();
+  isSignOutSuccessful = new EventEmitter<boolean>();
 
   loginState( loginState ) {
     this.loginEmitter.emit( loginState );
@@ -31,11 +32,14 @@ export class LoginService {
   }
 
   onSignOut( ) {
+    var self = this;
     firebase.auth().signOut().then( function () {
       console.log( "Service - User was sign out" );
+      self.isSignOutSuccessful.emit(true);
     }, function ( error ) {
       console.log( error );
       console.log( "Service - There was an error during singing out" );
+      self.isSignOutSuccessful.emit(false);
     } );
   }
 
