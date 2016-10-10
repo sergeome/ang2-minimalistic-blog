@@ -1,11 +1,37 @@
 <div class="menu-wrapper">
-  <a class="mobile-menu-switcher" (click)="isResponsive = !isResponsive;">&#9776;</a>
+  <a class="mobile-menu-switcher"
+     (click)="isResponsive = !isResponsive;">&#9776;</a>
+
   <ul class="top-menu" [class.responsive]="isResponsive">
-    <li><a [routerLink]="['']">All Posts</a></li>
-    <li><a [routerLink]="['']">Popular Posts</a></li>
-    <li><a [routerLink]="['/singlepost']">Single Post</a></li>
-    <li><a [routerLink]="['/addpost']" *ngIf="isAuthenticated">Add Post</a></li>
-    <li *ngIf="isAuthenticated" ><a style="cursor: pointer" (click)="onLogout()" >Logout</a></li>
-    <li *ngIf="!isAuthenticated" ><a [routerLink]="['/login']">Login</a></li>
+
+    <li (click)="isResponsive = !isResponsive;">
+      <a [routerLink]="['']"
+         routerLinkActive="active"
+         [routerLinkActiveOptions]="{exact: true}">All Posts</a></li>
+
+    <li (click)="isResponsive = !isResponsive;">
+      <a [routerLink]="['']"
+         >Popular Posts</a></li>
+
+    <li (click)="isResponsive = !isResponsive;">
+      <a [routerLink]="['/singlepost']"
+         routerLinkActive="active">Single Post</a></li>
+
+    <li (click)="isResponsive = !isResponsive;">
+      <a [routerLink]="['/addpost']"
+         *ngIf="isAuthenticated"
+         routerLinkActive="active">Add Post</a></li>
+
+    <li (click)="isResponsive = !isResponsive;"
+        *ngIf="isAuthenticated" >
+      <a style="cursor: pointer"
+         (click)="onLogout()"
+         routerLinkActive="active">Logout</a></li>
+
+    <li (click)="isResponsive = !isResponsive;"
+        *ngIf="!isAuthenticated" >
+      <a [routerLink]="['/login']"
+         routerLinkActive="active">Login</a></li>
+
   </ul>
 </div>
