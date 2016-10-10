@@ -30,7 +30,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(){
-    // this.isLoading = false;
     this.isReady();
   }
 }

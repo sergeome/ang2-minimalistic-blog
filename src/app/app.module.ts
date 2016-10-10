@@ -36,7 +36,7 @@ import { NotAuthorizedGuard } from "./blog/not-authorized.guard";
     AllPostsComponent,
     SinglePostComponent,
     HomePageComponent,
-    NotFoundComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
