@@ -1,11 +1,11 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async } from '@angular/core/testing';
-import { SinglePostComponent } from './single-post.component';
+import { NotFoundComponent } from '../blog/not-found/not-found.component';
 
-describe('Component: SinglePost', () => {
+describe('Component: NotFound', () => {
   it('should create an instance', () => {
-    let component = new SinglePostComponent();
+    let component = new NotFoundComponent();
     expect(component).toBeTruthy();
   });
 });

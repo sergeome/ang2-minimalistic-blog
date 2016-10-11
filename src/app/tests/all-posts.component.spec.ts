@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async } from '@angular/core/testing';
-import { AllPostsComponent } from './all-posts.component';
+import { AllPostsComponent } from '../blog/posts/all-posts/all-posts.component';
 
 describe('Component: AllPosts', () => {
   it('should create an instance', () => {

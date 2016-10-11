@@ -1,11 +1,11 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async } from '@angular/core/testing';
-import { NotFoundComponent } from './not-found.component';
+import { FooterComponent } from '../blog/footer/footer.component';
 
-describe('Component: NotFound', () => {
+describe('Component: Footer', () => {
   it('should create an instance', () => {
-    let component = new NotFoundComponent();
+    let component = new FooterComponent();
     expect(component).toBeTruthy();
   });
 });
