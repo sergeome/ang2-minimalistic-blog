@@ -1,8 +1,8 @@
 export interface Post {
-  // author: string;
+  author: string;
   content: string;
-  // id: number;
-  // image?: string;
+  id: number;
+  image?: string;
   // tags: string;
   title: string;
 }

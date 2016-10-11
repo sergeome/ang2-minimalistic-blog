@@ -12,7 +12,7 @@
                 placeholder="Post content..."
                 formControlName="content"></textarea>
       <label for="content"></label>
-      <button class="submit-post" [disabled]="!postForm.valid" (click)="onSubmit()">Submit</button>
+      <button class="submit-post" [disabled]="!postForm.valid" (click)="onSetPost()">Submit</button>
       <button class="attach-image">Attach Image</button>
     </form>
     <div class="post-image">

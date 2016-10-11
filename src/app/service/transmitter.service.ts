@@ -27,6 +27,14 @@ export class TransmitterService {
   }
 
   sendPost( post: any ) {
+    var x;
+    console.log( "Sending post for the first time" );
+    x = firebase.database().ref().child( 'posts' ).push().set( post );
+    console.log( x );
+  }
+
+  editPost( post: any ) {
+    console.log( "Editing existing post" );
     firebase.database().ref().child( 'posts' ).push().set( post );
   }
 
