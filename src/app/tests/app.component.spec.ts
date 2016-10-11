@@ -51,24 +51,29 @@ describe('App: Ang2Sergeblog', () => {
 
   describe('App component test', () => {
 
-    it('App component is initialized', async(() => {
-      let fixture = TestBed.createComponent(AppComponent);
-      let app = fixture.debugElement.componentInstance;
-      console.log(app);
-      expect(app).toBeTruthy();
+    var appComponent: any;
+    var appComponentDOM: any;
+    var fixture: any;
+
+    beforeEach(
+      function getAppComponent (){
+        fixture = TestBed.createComponent(AppComponent);
+        appComponent = fixture.debugElement.componentInstance;
+        appComponentDOM = fixture.debugElement.nativeElement;
+      }
+    );
+
+    it('App component should be created', async(() => {
+      expect(appComponent).toBeTruthy();
     }));
 
-    it('IsLogin by Default should be false', () => {
-      let fixture = TestBed.createComponent(AppComponent);
-      let app = fixture.debugElement.componentInstance;
-      expect(app.isLogin).toBeFalsy();
-    });
+    it('IsLogin by Default should be false', async(() => {
+      expect(appComponent.isLogin).toBeFalsy();
+    }));
 
-    it('IsReady Function test', () => {
-      let fixture = TestBed.createComponent(AppComponent);
-      let app = fixture.debugElement.componentInstance;
-      expect(app).toBeTruthy();
-    });
+    it('IsReady Function test', async(() => {
+      expect(appComponent.isReady()).toBeTruthy();
+    }));
 
   });
 
