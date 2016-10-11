@@ -9,11 +9,7 @@ import { LoginService } from "./service/login.service";
 } )
 export class AppComponent implements OnInit, AfterViewInit {
 
-  // isLoading: boolean;
-
-  constructor( private loginService: LoginService ) {
-    // this.isLoading = true;
-  }
+  constructor( private loginService: LoginService ) {}
 
   @HostBinding( 'class.login' ) isLogin = false;
 

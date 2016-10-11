@@ -1,6 +1,6 @@
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { AppComponent } from '../app.component';
 import { routing } from "../app.routing";
 import { HomePageComponent } from "../blog/homepage/homepage.component";
@@ -49,16 +49,27 @@ describe('App: Ang2Sergeblog', () => {
     });
   });
 
-  describe('1st tests', () => {
-    it('true is true', () => expect(true).toBe(true));
-  });
+  describe('App component test', () => {
 
-  describe('2nd tests', () => {
-    it('true is true', () => expect(true).toBe(true));
-  });
+    it('App component is initialized', async(() => {
+      let fixture = TestBed.createComponent(AppComponent);
+      let app = fixture.debugElement.componentInstance;
+      console.log(app);
+      expect(app).toBeTruthy();
+    }));
 
-  describe('3rd test', () => {
-    it('true is true', () => expect(true).toBe(true));
+    it('IsLogin by Default should be false', () => {
+      let fixture = TestBed.createComponent(AppComponent);
+      let app = fixture.debugElement.componentInstance;
+      expect(app.isLogin).toBeFalsy();
+    });
+
+    it('IsReady Function test', () => {
+      let fixture = TestBed.createComponent(AppComponent);
+      let app = fixture.debugElement.componentInstance;
+      expect(app).toBeTruthy();
+    });
+
   });
 
 
