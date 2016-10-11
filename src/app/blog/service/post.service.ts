@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class PostService {
+export class PostService{
 
-  constructor() { }
+  constructor() {}
 
 }

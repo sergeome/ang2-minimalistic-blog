@@ -533,6 +533,10 @@ footer{
 .write-post button:hover{
     background-color: #1b729b;
 }
+.write-post button[disabled]{
+    background: #f2f2f2;
+    cursor: not-allowed;
+}
 .submit-post{
     float: right;
 }

@@ -17,6 +17,7 @@ import { SinglePostComponent } from "./blog/posts/single-post/single-post.compon
 import { HomePageComponent } from "./blog/homepage/homepage.component";
 import { NotFoundComponent } from "./blog/not-found/not-found.component";
 import { NotAuthorizedGuard } from "./blog/not-authorized.guard";
+import { TransmitterService } from "./service/transmitter.service";
 
 //Main Component
 
@@ -47,6 +48,7 @@ import { NotAuthorizedGuard } from "./blog/not-authorized.guard";
   ],
   providers: [
     LoginService,
+    TransmitterService,
     NotAuthorizedGuard
   ],
   bootstrap: [AppComponent]
