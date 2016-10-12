@@ -9,6 +9,8 @@ export class TransmitterService {
 
   database = firebase.database();
 
+  postKey: any;
+
   dataBaseUrl = "https://sergeblog-bee9c.firebaseio.com";
 
   constructor( private http: Http ) {}
@@ -27,15 +29,13 @@ export class TransmitterService {
   }
 
   sendPost( post: any ) {
-    var x;
-    console.log( "Sending post for the first time" );
-    x = firebase.database().ref().child( 'posts' ).push().set( post );
-    console.log( x );
+    this.postKey = firebase.database().ref().child( 'posts' ).push( post ).key;
   }
 
   editPost( post: any ) {
-    console.log( "Editing existing post" );
-    firebase.database().ref().child( 'posts' ).push().set( post );
+    var updates = {};
+    updates['/posts/' + this.postKey] = post;
+    return firebase.database().ref().update(updates);
   }
 
 }
