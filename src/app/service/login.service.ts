@@ -7,9 +7,9 @@ declare var firebase: any;
 @Injectable()
 
 export class LoginService {
+
   constructor() {}
 
-  isLoginSucessful = true;
   loginEmitter = new EventEmitter<boolean>();
   isLoginCorrectEmitter = new EventEmitter<boolean>();
   isSignOutSuccessful = new EventEmitter<boolean>();

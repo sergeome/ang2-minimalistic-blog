@@ -27,15 +27,11 @@ describe( 'AppComponent Test Suite', () => {
     expect( appComponent.isLogin ).toBeFalsy();
   } );
 
-  it( "Function isReady() is exist and always return true", () => {
+  it( "Function isReady() exists and always return true", () => {
     expect( appComponent.isReady() ).toBeTruthy();
   } );
 
-  it( "Function ngOnInit() is exist", () => {
-    expect( appComponent.ngOnInit ).toBeTruthy();
-  } );
-
-  it( "Function ngOnInit() returns undefined", () => {
+  it( "Function ngOnInit() exists and returns undefined", () => {
     expect( appComponent.ngOnInit() ).toBeUndefined();
   } );
 
@@ -43,11 +39,7 @@ describe( 'AppComponent Test Suite', () => {
     expect( appComponent.ngOnInit ).toMatch("this.loginService.loginEmitter");
   } );
 
-  it( "Function AfterViewInit() is exist", () => {
-    expect( appComponent.ngAfterViewInit ).toBeTruthy();
-  } );
-
-  it( "Function AfterViewInit() returns undefined", () => {
+  it( "Function AfterViewInit() exists and returns undefined", () => {
     expect( appComponent.ngAfterViewInit() ).toBeUndefined();
   } );
 
