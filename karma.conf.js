@@ -13,7 +13,7 @@ module.exports = function (config) {
       require('angular-cli/plugins/karma')
     ],
     files: [
-      { pattern: './src/test.ts', watched: false }
+      { pattern: './src/test.ts', watched: true }
     ],
     preprocessors: {
       './src/test.ts': ['angular-cli']
@@ -32,8 +32,7 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true,
-    autoWatchBatchDelay: 10,
+    autoWatch: false,
     browsers: ['PhantomJS'],
     singleRun: false
   });
