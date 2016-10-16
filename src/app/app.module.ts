@@ -18,6 +18,7 @@ import { HomePageComponent } from "./blog/homepage/homepage.component";
 import { NotFoundComponent } from "./blog/not-found/not-found.component";
 import { NotAuthorizedGuard } from "./blog/not-authorized.guard";
 import { TransmitterService } from "./service/transmitter.service";
+import { FirebaseService } from "./service/firebase.service";
 
 //Main Component
 
@@ -49,6 +50,7 @@ import { TransmitterService } from "./service/transmitter.service";
   providers: [
     LoginService,
     TransmitterService,
+    FirebaseService,
     NotAuthorizedGuard
   ],
   bootstrap: [AppComponent]

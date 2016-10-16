@@ -1,8 +1,7 @@
 import { Injectable, EventEmitter } from "@angular/core";
 import { User } from "../interfaces/user.interface";
 import { Subject, Observable } from "rxjs";
-
-declare var firebase: any;
+import * as firebase from "firebase";
 
 @Injectable()
 

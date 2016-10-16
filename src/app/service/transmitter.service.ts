@@ -1,8 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Http, Response, Headers } from "@angular/http";
-import 'rxjs/Rx';
-
-declare var firebase: any;
+import { Injectable } from "@angular/core";
+import { Http, Response } from "@angular/http";
+import "rxjs/Rx";
+import * as firebase from "firebase";
 
 @Injectable()
 export class TransmitterService {

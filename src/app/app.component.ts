@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from "@angular/core";
 import { HostBinding } from "@angular/core/src/metadata/directives";
 import { LoginService } from "./service/login.service";
+import { FirebaseService } from "./service/firebase.service";
 
 @Component( {
   selector: 'body',
@@ -9,7 +10,7 @@ import { LoginService } from "./service/login.service";
 } )
 export class AppComponent implements OnInit, AfterViewInit {
 
-  constructor( private loginService: LoginService ) {}
+  constructor( private loginService: LoginService, private firebaseService: FirebaseService) {}
 
   @HostBinding( 'class.login' ) isLogin = false;
 
