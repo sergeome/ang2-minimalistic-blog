@@ -14,7 +14,7 @@ export class MenuComponent implements OnInit {
   isSignOutSuccessful: boolean;
 
   private subscription: Subscription;
-  isAuthenticated: any = true;
+  isAuthenticated: any;
 
   constructor(private loginService: LoginService, private router:Router) {
     this.subscription = this.loginService.isAuthenticated().subscribe(

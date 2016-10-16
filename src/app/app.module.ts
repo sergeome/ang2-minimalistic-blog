@@ -55,4 +55,8 @@ import { FirebaseService } from "./service/firebase.service";
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {  }
+export class AppModule {
+
+  constructor(){}
+
+}

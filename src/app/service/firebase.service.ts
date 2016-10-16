@@ -12,7 +12,7 @@ export class FirebaseService {
       storageBucket: "sergeblog-bee9c.appspot.com",
       messagingSenderId: "7214007472"
     };
-    firebase.initializeApp(config);
+    firebase.initializeApp( config );
   }
 
 }
