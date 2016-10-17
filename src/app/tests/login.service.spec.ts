@@ -1,20 +1,27 @@
 import { LoginService } from "../service/login.service";
 import { FirebaseTestService } from "./firebase.test.service";
 import * as firebase from "firebase";
+import { Subject, Observable } from "rxjs";
 
 describe( 'LoginService Test Suite', () => {
   let loginService: LoginService;
   let firebaseTestService: FirebaseTestService;
+  let testSubject: Subject<boolean>;
+  let testObservable: Observable<boolean>;
 
   beforeAll(() => {
     loginService = new LoginService();
     firebaseTestService = new FirebaseTestService();
+    testSubject = new Subject<boolean>();
+    testObservable = testSubject.asObservable();
   });
 
   afterAll(() => {
     firebaseTestService.removeInstance();
     loginService = null;
     firebaseTestService = null;
+    testObservable = null;
+    testSubject = null;
   } );
 
   it( "Login Service was initialized", () => {
@@ -48,14 +55,25 @@ describe( 'LoginService Test Suite', () => {
     expect( loginService.loginState ).toMatch("this.loginEmitter.emit");
   } );
 
-
-  it( "Function onLogin() exists and returns undefined", () => {
-    var user = {
-      password: "test",
+  it( "Function onLogin() exists and returns undefined. Login test.", () => {
+    var incorrectCredentials = {
+      password: "test@testy.com",
       email: "test"
     };
-    expect(loginService.onLogin(user)).toBeUndefined();
+    expect(loginService.onLogin(incorrectCredentials)).toBeUndefined();
+    var correctCredentials = {
+      password: "test@test.com",
+      email: "testtesttest"
+    };
+    expect(loginService.onLogin(correctCredentials)).toBeUndefined();
   } );
 
+  it( "Function onSignOut() exists and returns undefined", () => {
+    expect(loginService.onSignOut()).toBeUndefined();
+  } );
+
+  it( "Function isAuthenticated() exists and returns Observable", () => {
+    expect( loginService.isAuthenticated()).toEqual( testObservable );
+  } );
 
 } );
