@@ -55,17 +55,12 @@ describe( 'LoginService Test Suite', () => {
     expect( loginService.loginState ).toMatch("this.loginEmitter.emit");
   } );
 
-  it( "Function onLogin() exists and returns undefined. Login test.", () => {
+  it( "Function onLogin() exists and returns undefined. Correct credentials test.", () => {
     var incorrectCredentials = {
-      password: "test@testy.com",
-      email: "test"
+      email: "test@test.com",
+      password: "testtesttest"
     };
     expect(loginService.onLogin(incorrectCredentials)).toBeUndefined();
-    var correctCredentials = {
-      password: "test@test.com",
-      email: "testtesttest"
-    };
-    expect(loginService.onLogin(correctCredentials)).toBeUndefined();
   } );
 
   it( "Function onSignOut() exists and returns undefined", () => {
