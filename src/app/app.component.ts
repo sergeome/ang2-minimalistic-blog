@@ -1,4 +1,4 @@
-import { Component, OnInit, HostBinding } from "@angular/core";
+import { Component, OnInit, HostBinding, AfterViewChecked } from "@angular/core";
 import { LoginService } from "./service/login.service";
 import { FirebaseService } from "./service/firebase.service";
 
@@ -7,7 +7,7 @@ import { FirebaseService } from "./service/firebase.service";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 } )
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewChecked {
 
   constructor( private loginService: LoginService, private firebaseService: FirebaseService) {}
 

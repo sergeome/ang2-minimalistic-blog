@@ -21,6 +21,10 @@ describe( 'AppComponent Test Suite', () => {
     appComponent = null;
   } );
 
+  it( "Firebase Test Service was initialized", () => {
+    expect( firebaseTestService ).toBeTruthy();
+  } );
+
   it( "Login Service was initialized", () => {
     expect( loginService ).toBeTruthy();
   } );
@@ -41,6 +45,10 @@ describe( 'AppComponent Test Suite', () => {
     expect( appComponent.isLogin ).toBeFalsy();
   } );
 
+  it( "Variable bodyIsHidden exist and it's true by default", () => {
+    expect( appComponent.bodyIsHidden ).toBeTruthy();
+  } );
+
   it( "Function ngOnInit() exists and returns undefined", () => {
     expect( appComponent.ngOnInit() ).toBeUndefined();
   } );
@@ -53,5 +61,12 @@ describe( 'AppComponent Test Suite', () => {
     expect( appComponent.ngAfterViewChecked() ).toBeUndefined();
   } );
 
+  it( "Function ngAfterViewChecked() contains Variable bodyIsHidden", () => {
+    expect( appComponent.ngAfterViewChecked ).toMatch("this.bodyIsHidden")
+  } );
+
+  it( "Function ngAfterViewChecked() contains setTimeout", () => {
+    expect( appComponent.ngAfterViewChecked ).toMatch("setTimeout")
+  } );
 
 } );
