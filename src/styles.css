@@ -528,11 +528,15 @@ footer{
     background: #f2f2f2;
     cursor: not-allowed;
 }
-.submit-post{
-    float: right;
-}
 .attach-image{
     float: left;
+}
+.write-new-post {
+    float: right;
+    margin-right: 20px;
+}
+.submit-post{
+    float: right;
 }
 
 /*Spinner*/
@@ -615,7 +619,7 @@ footer{
     }
 }
 
-/*Class hide*/
+/*Class hide. Used for body hidding*/
 .hide {
     display: none;
 }
@@ -716,6 +720,17 @@ footer{
     ul.top-menu.responsive li:first-child{
         background: none;
     }
+
+    /*Mobile add post buttons*/
+    .attach-image, .write-new-post, .submit-post{
+        float: none;
+        display: block;
+        margin: 0 auto;
+    }
+    .write-new-post, .submit-post {
+        margin-bottom: 20px;
+    }
+
 }
 @media screen and (max-width: 772px) {
     article {
