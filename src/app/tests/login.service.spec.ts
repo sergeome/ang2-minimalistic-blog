@@ -1,19 +1,21 @@
 import { LoginService } from "../service/login.service";
-
-var firebase = require("firebase");
-var config = {
-  apiKey: "AIzaSyAxxuriKF88lbkhKsH1TSBienKR7OeVR2U",
-  authDomain: "sergeblog-bee9c.firebaseapp.com",
-  databaseURL: "https://sergeblog-bee9c.firebaseio.com",
-  storageBucket: "sergeblog-bee9c.appspot.com",
-  messagingSenderId: "7214007472"
-};
-firebase.initializeApp(config);
+import { FirebaseTestService } from "./firebase.test.service";
+import * as firebase from "firebase";
 
 describe( 'LoginService Test Suite', () => {
   let loginService: LoginService;
+  let firebaseTestService: FirebaseTestService;
 
-  beforeEach(() => { loginService = new LoginService();});
+  beforeAll(() => {
+    loginService = new LoginService();
+    firebaseTestService = new FirebaseTestService();
+  });
+
+  afterAll(() => {
+    firebaseTestService.removeInstance();
+    loginService = null;
+    firebaseTestService = null;
+  } );
 
   it( "Login Service was initialized", () => {
     expect( loginService ).toBeTruthy();
@@ -42,20 +44,17 @@ describe( 'LoginService Test Suite', () => {
     expect( loginService.loginState(true) ).toBeUndefined();
   } );
 
-
-
   it( "Function loginState() contains loginEmitter", () => {
     expect( loginService.loginState ).toMatch("this.loginEmitter.emit");
   } );
 
 
-  xit( "Function onLogin() exists and returns undefined", () => {
+  it( "Function onLogin() exists and returns undefined", () => {
     var user = {
       password: "test",
       email: "test"
     };
-    loginService.onLogin(user);
-    expect(true).toBe(true);
+    expect(loginService.onLogin(user)).toBeUndefined();
   } );
 
 

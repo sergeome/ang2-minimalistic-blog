@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
     );
   }
 
-  //
   ngAfterViewChecked(){
     setTimeout(_ => this.bodyIsHidden = false);
   }
