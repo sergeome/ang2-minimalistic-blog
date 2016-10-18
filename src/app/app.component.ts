@@ -9,7 +9,7 @@ import { FirebaseService } from "./service/firebase.service";
 } )
 export class AppComponent implements OnInit, AfterViewChecked {
 
-  constructor( private loginService: LoginService, private firebaseService: FirebaseService) {}
+  constructor( private firebaseService: FirebaseService, private loginService: LoginService) {}
 
   @HostBinding( 'class.login' ) isLogin = false;
   @HostBinding( 'class.hide' ) bodyIsHidden = true;
