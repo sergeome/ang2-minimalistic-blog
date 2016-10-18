@@ -50,7 +50,9 @@ export class AddPostComponent implements OnInit {
   }
 
   onImageUpload(){
-    firebase.storage().ref('test').put(this.fileInput.nativeElement.files[0]).then(function(snapshot) {
+    var image = this.fileInput.nativeElement.files[0];
+    var imageName = this.fileInput.nativeElement.files[0].name;
+    firebase.storage().ref(imageName).put(image).then(function(snapshot) {
       console.log('Uploaded a blob or file!');
     });
   }
