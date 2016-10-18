@@ -14,7 +14,8 @@
       <label for="content"></label>
       <button class="submit-post" [disabled]="!postForm.valid" (click)="onSetPost()">{{ctaSubmitTitle}}</button>
       <button class="write-new-post" *ngIf="this.isSubmitted" (click)="onNewPost()">Write a new Post</button>
-      <button class="attach-image">Attach Image</button>
+      <!--<button onclick="onImageUpload()" class="attach-image">Attach Image</button>-->
+      <input type="file" #fileInput (change)="onImageUpload()" >
     </form>
     <div class="post-image">
     </div>

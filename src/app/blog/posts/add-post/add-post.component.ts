@@ -1,7 +1,8 @@
-import { Component, OnInit, EventEmitter } from '@angular/core';
+import { Component, OnInit, EventEmitter, ElementRef, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { TransmitterService } from "../../../service/transmitter.service";
 import { Post } from "../../../interfaces/post.interface";
+import * as firebase from "firebase";
 
 declare var post: Post;
 
@@ -14,12 +15,12 @@ declare var post: Post;
 export class AddPostComponent implements OnInit {
 
   postForm: FormGroup;
-
   post: Post = {
     author: "Sergeome",
     content: "",
     id: Math.floor((Math.random() * 100) + 1),
     title: "",
+    imageRef: ""
   };
 
   isSubmitted = false;
@@ -33,6 +34,9 @@ export class AddPostComponent implements OnInit {
     });
   }
 
+  @ViewChild('fileInput')
+  fileInput: ElementRef;
+
   onSetPost(){
     if (!this.isSubmitted) {
       this.onSubmit();
@@ -43,6 +47,12 @@ export class AddPostComponent implements OnInit {
 
   onNewPost(){
     this.isSubmittedEmitter.emit(false);
+  }
+
+  onImageUpload(){
+    firebase.storage().ref('test').put(this.fileInput.nativeElement.files[0]).then(function(snapshot) {
+      console.log('Uploaded a blob or file!');
+    });
   }
 
   onSubmit(){
