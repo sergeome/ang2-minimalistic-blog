@@ -2,7 +2,6 @@ import { Component, OnInit, EventEmitter, ElementRef, ViewChild } from "@angular
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { TransmitterService } from "../../../service/transmitter.service";
 import { Post } from "../../../interfaces/post.interface";
-import * as firebase from "firebase";
 
 declare var post: Post;
 
@@ -15,6 +14,7 @@ declare var post: Post;
 export class AddPostComponent implements OnInit {
 
   postForm: FormGroup;
+
   post: Post = {
     author: "Sergeome",
     content: "",
@@ -22,6 +22,8 @@ export class AddPostComponent implements OnInit {
     title: "",
     imageRef: ""
   };
+
+  imageURL:any = "";
 
   isSubmitted = false;
   isSubmittedEmitter = new EventEmitter<boolean>();
@@ -39,9 +41,9 @@ export class AddPostComponent implements OnInit {
 
   onSetPost(){
     if (!this.isSubmitted) {
-      this.onSubmit();
+      this.onSubmitPost();
     } else {
-      this.onEdit();
+      this.onEditPost();
     }
   }
 
@@ -52,19 +54,23 @@ export class AddPostComponent implements OnInit {
   onImageUpload(){
     var image = this.fileInput.nativeElement.files[0];
     var imageName = this.fileInput.nativeElement.files[0].name;
-    firebase.storage().ref(imageName).put(image).then(function(snapshot) {
-      console.log('Uploaded a blob or file!');
-    });
+    this.transmitterService.onImageUpload(image, imageName);
+    this.transmitterService.imageURLEmitter.subscribe(
+      imageURL => {
+        this.imageURL = imageURL;
+        console.log( this.imageURL );
+      }
+    );
   }
 
-  onSubmit(){
+  onSubmitPost(){
     this.post.title = this.postForm.value.title;
     this.post.content = this.postForm.value.content;
     this.transmitterService.sendPost(this.post);
     this.isSubmittedEmitter.emit(true);
   }
 
-  onEdit() {
+  onEditPost() {
     this.post.title = this.postForm.value.title;
     this.post.content = this.postForm.value.content;
     this.transmitterService.editPost(this.post);

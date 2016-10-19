@@ -14,10 +14,10 @@
       <label for="content"></label>
       <button class="submit-post" [disabled]="!postForm.valid" (click)="onSetPost()">{{ctaSubmitTitle}}</button>
       <button class="write-new-post" *ngIf="this.isSubmitted" (click)="onNewPost()">Write a new Post</button>
-      <!--<button onclick="onImageUpload()" class="attach-image">Attach Image</button>-->
+      <!--<button onclick="getImageURL()" class="attach-image">Attach Image</button>-->
       <input type="file" #fileInput (change)="onImageUpload()" >
     </form>
-    <div class="post-image">
+    <div *ngIf="imageURL" class="post-image" style="width: 300px; height: auto"><img [src]="imageURL" alt="">
     </div>
   </article>
 </section>

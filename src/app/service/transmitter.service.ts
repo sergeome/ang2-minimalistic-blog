@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, EventEmitter } from "@angular/core";
 import { Http, Response } from "@angular/http";
 import "rxjs/Rx";
 import * as firebase from "firebase";
@@ -6,9 +6,8 @@ import * as firebase from "firebase";
 @Injectable()
 export class TransmitterService {
 
-  database = firebase.database();
-
   postKey: any;
+  imageURLEmitter = new EventEmitter<String>();
 
   dataBaseUrl = "https://sergeblog-bee9c.firebaseio.com";
 
@@ -25,6 +24,17 @@ export class TransmitterService {
   getAllPosts() {
     return this.http.get( this.dataBaseUrl + "/posts.json" )
       .map( ( response: Response ) => response.json() );
+  }
+
+  onImageUpload( image, imageName ) {
+    var postImageDirectory = "Post Images/";
+    firebase.storage().ref( postImageDirectory + imageName ).put( image ).then( ( snapshot ) => {
+
+      firebase.storage().ref().child( postImageDirectory + imageName ).getDownloadURL().then( ( URL ) => {
+        this.imageURLEmitter.emit(URL);
+      } );
+    } );
+
   }
 
   sendPost( post: any ) {
