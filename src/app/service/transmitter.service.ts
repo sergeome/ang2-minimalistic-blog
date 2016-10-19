@@ -1,13 +1,15 @@
 import { Injectable, EventEmitter } from "@angular/core";
-import { Http, Response } from "@angular/http";
+import { Http } from "@angular/http";
 import "rxjs/Rx";
 import * as firebase from "firebase";
 
 @Injectable()
 export class TransmitterService {
 
+  getPostEmitter = new EventEmitter<any>();
+
   postKey: any;
-  imageURLEmitter = new EventEmitter<String>();
+  imageURLEmitter = new EventEmitter<string>();
   isPostPostedEmitter = new EventEmitter<boolean>();
   isPostUpdatedEmitter = new EventEmitter<boolean>();
 
@@ -15,17 +17,18 @@ export class TransmitterService {
 
   constructor( private http: Http ) {}
 
-  //FireBase doesn't work with API anymore.
-  //You should use local SDK instead.
-  //TODO - rewrite get methods
-  getPostById() {
-    return this.http.get( this.dataBaseUrl + "/posts.json" )
-      .map( ( response: Response ) => response.json() );
-  }
-
-  getAllPosts() {
-    return this.http.get( this.dataBaseUrl + "/posts.json" )
-      .map( ( response: Response ) => response.json() );
+  getAllPostsAtOnceFromFirebase(){
+    var query = firebase.database().ref("posts").orderByKey();
+    query.once("value")
+      .then( (snapshot) => {
+        snapshot.forEach( (childSnapshot) => {
+          // key will be "ada" the first time and "alan" the second time
+          var key = childSnapshot.key;
+          // childData will be the actual contents of the child
+          var childData = childSnapshot.val();
+          this.getPostEmitter.emit(childData);
+        });
+      });
   }
 
   onImageUpload( image, imageName ) {
