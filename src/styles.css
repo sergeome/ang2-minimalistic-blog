@@ -485,7 +485,7 @@ footer{
 
 /*Write Post*/
 /*Inputs*/
-.write-post input[type=text] {
+.write-post input[type=text].post-title {
     font-size: 25px;
     padding: 0 0 10px 0;
 }
@@ -505,11 +505,12 @@ footer{
     box-shadow: 0 1px 0 0 #1b729b;
 }
 .write-post textarea {
-    font: 400 17px/30px 'Merriweather', serif;
+    font: 400 15px/30px 'Merriweather', serif;
 }
-/*.write-post input[type=file] {*/
-    /*background: red;*/
-/*}*/
+.write-post input[type=text].post-tags {
+    font-size: 15px;
+    padding: 0 0 10px 0;
+}
 .inputfile {
     width: 1px;
     height: 1px;

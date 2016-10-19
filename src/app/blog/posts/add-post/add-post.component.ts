@@ -15,22 +15,24 @@ export class AddPostComponent implements OnInit {
 
   postForm: FormGroup;
 
+  isSubmitted = false;
+  isSubmittedEmitter = new EventEmitter<boolean>();
+  ctaSubmitTitle = "Publish";
+
   post: Post = {
     author: "Sergeome",
     content: "",
     imageURL: "",
     title: "",
-    tags: ""
+    tags: "",
+    date: ""
   };
-
-  isSubmitted = false;
-  isSubmittedEmitter = new EventEmitter<boolean>();
-  ctaSubmitTitle = "Publish";
 
   constructor(private transmitterService: TransmitterService) {
     this.postForm = new FormGroup({
       'title': new FormControl('', Validators.required),
-      'content': new FormControl('', Validators.required)
+      'content': new FormControl('', Validators.required),
+      'tags': new FormControl('')
     });
   }
 
@@ -63,6 +65,8 @@ export class AddPostComponent implements OnInit {
   onSubmitPost(){
     this.post.title = this.postForm.value.title;
     this.post.content = this.postForm.value.content;
+    this.post.tags = this.postForm.value.tags;
+    this.post.date = this.getToday();
     this.transmitterService.sendPost(this.post);
     this.isSubmittedEmitter.emit(true);
   }
@@ -70,7 +74,20 @@ export class AddPostComponent implements OnInit {
   onEditPost() {
     this.post.title = this.postForm.value.title;
     this.post.content = this.postForm.value.content;
+    this.post.tags = this.postForm.value.tags;
+    this.post.date = this.getToday();
     this.transmitterService.editPost(this.post);
+  }
+
+  getToday(){
+    var today = new Date;
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+
+    var todayFormatted = mm + "." + dd + "." + yyyy;
+
+    return todayFormatted;
   }
 
   ngOnInit() {

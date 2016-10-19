@@ -2,6 +2,7 @@
   <article itemscope itemtype="https://schema.org/BlogPosting">
     <form class="input-fields" [formGroup]="postForm">
       <input type="text"
+             class="post-title"
              id="title"
              placeholder="Title..."
              formControlName="title"  >
@@ -9,9 +10,16 @@
       <textarea cols="30"
                 rows="8"
                 id="content"
+                class="post-content"
                 placeholder="Post content..."
                 formControlName="content"></textarea>
       <label for="content"></label>
+      <input type="text"
+             class="post-tags"
+             id="tags"
+             placeholder="Tags..."
+             formControlName="tags"  >
+      <label for="tags"></label>
       <button class="submit-post" [disabled]="!postForm.valid && !post.imageURL" (click)="onSetPost()">{{ctaSubmitTitle}}</button>
       <button class="write-new-post" *ngIf="this.isSubmitted" (click)="onNewPost()">Write a new Post</button>
       <input type="file" name="fileInput" class="inputfile" id="fileInput" #fileInput (change)="onImageUpload()" >
