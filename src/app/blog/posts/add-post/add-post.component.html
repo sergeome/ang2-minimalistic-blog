@@ -15,7 +15,8 @@
       <button class="submit-post" [disabled]="!postForm.valid" (click)="onSetPost()">{{ctaSubmitTitle}}</button>
       <button class="write-new-post" *ngIf="this.isSubmitted" (click)="onNewPost()">Write a new Post</button>
       <!--<button onclick="getImageURL()" class="attach-image">Attach Image</button>-->
-      <input type="file" #fileInput (change)="onImageUpload()" >
+      <input type="file" name="fileInput" class="inputfile" id="fileInput" #fileInput (change)="onImageUpload()" >
+      <label for="fileInput" class="inputfile-label">Choose a file</label>
     </form>
     <div *ngIf="imageURL" class="post-image" style="width: 300px; height: auto"><img [src]="imageURL" alt="">
     </div>
