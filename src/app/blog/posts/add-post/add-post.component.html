@@ -21,7 +21,7 @@
              formControlName="tags"  >
       <label for="tags"></label>
       <button class="submit-post" [disabled]="!postForm.valid && !post.imageURL" (click)="onSetPost()">{{ctaSubmitTitle}}</button>
-      <button class="write-new-post" (click)="onNewPost()" *ngIf="postStatus == 'posted' || 'updated'">Write a new Post</button>
+      <button class="write-new-post" (click)="onNewPost()" *ngIf="postStatus !== 'new'">Write a new Post</button>
       <input type="file" name="fileInput" class="inputfile" id="fileInput" #fileInput (change)="onImageUpload()" >
       <label for="fileInput" class="inputfile-label">Choose an image</label>
     </form>
