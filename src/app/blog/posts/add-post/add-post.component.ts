@@ -18,12 +18,10 @@ export class AddPostComponent implements OnInit {
   post: Post = {
     author: "Sergeome",
     content: "",
-    id: Math.floor((Math.random() * 100) + 1),
+    imageURL: "",
     title: "",
-    imageRef: ""
+    tags: ""
   };
-
-  imageURL:any = "";
 
   isSubmitted = false;
   isSubmittedEmitter = new EventEmitter<boolean>();
@@ -57,8 +55,7 @@ export class AddPostComponent implements OnInit {
     this.transmitterService.onImageUpload(image, imageName);
     this.transmitterService.imageURLEmitter.subscribe(
       imageURL => {
-        this.imageURL = imageURL;
-        console.log( this.imageURL );
+        this.post.imageURL = imageURL;
       }
     );
   }
