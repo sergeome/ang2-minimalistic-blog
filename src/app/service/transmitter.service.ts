@@ -8,6 +8,8 @@ export class TransmitterService {
 
   postKey: any;
   imageURLEmitter = new EventEmitter<String>();
+  isPostPostedEmitter = new EventEmitter<boolean>();
+  isPostUpdatedEmitter = new EventEmitter<boolean>();
 
   dataBaseUrl = "https://sergeblog-bee9c.firebaseio.com";
 
@@ -39,12 +41,24 @@ export class TransmitterService {
 
   sendPost( post: any ) {
     this.postKey = firebase.database().ref().child( 'posts' ).push( post ).key;
+    if (this.postKey) {
+      this.isPostPostedEmitter.emit(true);
+    } else {
+      this.isPostPostedEmitter.emit(false);
+    }
   }
 
   editPost( post: any ) {
     var updates = {};
     updates['/posts/' + this.postKey] = post;
-    return firebase.database().ref().update(updates);
+    firebase.database().ref().update(updates).then(
+      _ => {
+        this.isPostUpdatedEmitter.emit(true);
+      },
+      error => {
+        this.isPostUpdatedEmitter.emit(false);
+      }
+    );
   }
 
 }
