@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { TransmitterService } from "../../../service/transmitter.service";
 import { Post } from "../../../interfaces/post.interface";
@@ -15,9 +15,9 @@ export class AddPostComponent implements OnInit {
 
   postForm: FormGroup;
 
-  isSubmitted = false;
-  isSubmittedEmitter = new EventEmitter<boolean>();
   ctaSubmitTitle = "Publish";
+
+  postStatus = "new";
 
   post: Post = {
     author: "Sergeome",
@@ -40,15 +40,24 @@ export class AddPostComponent implements OnInit {
   fileInput: ElementRef;
 
   onSetPost(){
-    if (!this.isSubmitted) {
-      this.onSubmitPost();
-    } else {
-      this.onEditPost();
+    switch (this.postStatus) {
+      case "new":
+        this.onSubmitPost();
+        break;
+      case "posted":
+        this.onEditPost();
+        break;
+      case "updated":
+        this.onEditPost();
+        break;
     }
   }
 
   onNewPost(){
-    this.isSubmittedEmitter.emit(false);
+    this.postStatus = "new";
+    this.postForm.reset();
+    this.post.imageURL = "";
+    this.ctaSubmitTitle = "Publish";
   }
 
   onImageUpload(){
@@ -68,7 +77,6 @@ export class AddPostComponent implements OnInit {
     this.post.tags = this.postForm.value.tags;
     this.post.date = this.getToday();
     this.transmitterService.sendPost(this.post);
-    this.isSubmittedEmitter.emit(true);
   }
 
   onEditPost() {
@@ -88,18 +96,26 @@ export class AddPostComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isSubmittedEmitter.subscribe(
-      (status) => {
-        if (!status) {
-          this.ctaSubmitTitle = "Publish";
-          this.postForm.reset();
-          this.isSubmitted = false;
-        } else {
-          this.isSubmitted = status;
+    this.transmitterService.isPostPostedEmitter.subscribe(
+      (isPosted) => {
+        if (isPosted) {
+          this.postStatus = "posted";
           this.ctaSubmitTitle = "Republish";
+        } else {
+          this.postStatus = "error during posting";
         }
       }
-    )
+    );
+
+    this.transmitterService.isPostUpdatedEmitter.subscribe(
+      (isUpdated) => {
+        if (isUpdated) {
+          this.postStatus = "updated";
+        } else {
+          this.postStatus = "error during update";
+        }
+      }
+    );
   }
 
 }
