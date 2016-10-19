@@ -24,7 +24,7 @@ export class AddPostComponent implements OnInit {
     content: "",
     imageURL: "",
     title: "",
-    tags: "",
+    tags: [],
     date: ""
   };
 
@@ -74,7 +74,7 @@ export class AddPostComponent implements OnInit {
   onSubmitPost(){
     this.post.title = this.postForm.value.title;
     this.post.content = this.postForm.value.content;
-    this.post.tags = this.postForm.value.tags;
+    this.post.tags = this.postForm.value.tags.split(" ");
     this.post.date = this.getToday();
     this.transmitterService.sendPost(this.post);
   }
@@ -82,7 +82,7 @@ export class AddPostComponent implements OnInit {
   onEditPost() {
     this.post.title = this.postForm.value.title;
     this.post.content = this.postForm.value.content;
-    this.post.tags = this.postForm.value.tags;
+    this.post.tags = this.postForm.value.tags.split(" ");
     this.post.date = this.getToday();
     this.transmitterService.editPost(this.post);
   }
