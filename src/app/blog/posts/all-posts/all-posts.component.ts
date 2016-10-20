@@ -10,6 +10,7 @@ import { Post } from "../../../interfaces/post.interface";
 export class AllPostsComponent implements OnInit {
 
   allPosts = [];
+  loader = true;
   post: Post = {
     author: "Sergeome",
     content: "",
@@ -22,13 +23,18 @@ export class AllPostsComponent implements OnInit {
   constructor(private transmitterService: TransmitterService) { }
 
   ngOnInit() {
+    this.transmitterService.test();
     this.transmitterService.getAllPostsAtOnceFromFirebase();
     this.transmitterService.getPostEmitter.subscribe(
       (post) => {
         var currentPost = post;
         currentPost.content = currentPost.content.substring(0, 400);
         currentPost.content = currentPost.content + "...";
+
         this.allPosts.unshift(currentPost);
+        if (this.allPosts.length == 5){
+          this.loader = false;
+        }
       }
     )
   }

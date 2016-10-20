@@ -1,3 +1,6 @@
+<div *ngIf="loader" class="loader-wrapper" style="opacity: 1">
+  <div class="loader"></div>
+</div>
 <section class="page-body">
 <article *ngFor="let post of allPosts">
   <div class="post-date">Posted at <time>{{post.date}}</time></div>
