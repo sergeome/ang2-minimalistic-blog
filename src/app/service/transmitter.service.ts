@@ -35,42 +35,43 @@ export class TransmitterService {
       });
   }
 
-  getFirstPostKey(callback){
-    firebase.database().ref( "posts" ).orderByKey().limitToFirst( 1 ).on( "value", ( snapshot ) => {
+  getFirstPostKey = new Promise( ( resolve, reject ) => {
+    firebase.database().ref( "posts" ).orderByKey().limitToFirst( 3 ).on( "value", ( snapshot ) => {
       snapshot.forEach( ( childSnapshot ) => {
-          this.firstKey = childSnapshot.key;
-          if (this.firstKey){
-            callback();
+          if ( childSnapshot ) {
+            console.log( childSnapshot.key );
+            resolve( childSnapshot.key );
+          } else {
+            reject( "Error" );
           }
           return false;
         }
       )
     } );
-  }
+  } );
 
-  getLastPostKey(callback){
+  getLastPostKey = new Promise( ( resolve, reject ) => {
     firebase.database().ref( "posts" ).orderByKey().limitToLast( 1 ).on( "value", ( snapshot ) => {
       snapshot.forEach( ( childSnapshot ) => {
-          this.lastKey = childSnapshot.key;
-          if (this.lastKey){
-            callback();
+          if ( childSnapshot ) {
+            resolve( childSnapshot.key );
+          } else {
+            reject( "Error" );
           }
           return false;
         }
       )
     } );
-  }
+  } );
 
-  getPosts(amountOfPostsToRetrieve){
-    console.log( this.firstKey );
-    console.log( this.lastKey );
-    firebase.database().ref("posts").orderByKey().startAt(this.firstKey).endAt(this.lastKey).limitToLast(amountOfPostsToRetrieve).on("child_added", (dataSnapshot) => {
-      console.log( dataSnapshot.val() );
-    });
-  }
 
-  test(){
-    this.getFirstPostKey(this.getLastPostKey(this.getPosts(3)));
+  getPosts( amountOfPostsToRetrieve ) {
+    Promise.all( [this.getFirstPostKey, this.getLastPostKey] ).then( ( values ) => {
+      firebase.database().ref( "posts" ).orderByKey().startAt( values[0].toString() ).endAt( values[1].toString() ).limitToLast( amountOfPostsToRetrieve ).on( "child_added", ( dataSnapshot ) => {
+        this.getPostEmitter.emit( dataSnapshot.val() );
+        return false;
+      } );
+    } )
   }
 
   onImageUpload( image, imageName ) {

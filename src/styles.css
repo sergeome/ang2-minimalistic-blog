@@ -565,7 +565,8 @@ footer{
     z-index: 1000;
     background: rgba(52,69,87,1);
     opacity: 0.8;
-    transition: hide;
+    /*For transition*/
+    visibility:visible;
 }
 .loader {
     display: block;
@@ -635,9 +636,17 @@ footer{
     }
 }
 
-/*Class hide. Used for body hidding*/
+/*Class hide. Used for body and spinner hide*/
 .hide {
     display: none;
+}
+.hide-all {
+    opacity:1;
+}
+.hide-smoothly {
+    visibility:hidden;
+    opacity:0;
+    transition: visibility 1s linear, opacity 1s linear;
 }
 
 
