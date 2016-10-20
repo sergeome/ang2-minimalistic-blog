@@ -24,7 +24,7 @@ export class AllPostsComponent implements OnInit {
 
   ngOnInit() {
     this.transmitterService.test();
-    this.transmitterService.getAllPostsAtOnceFromFirebase();
+    this.transmitterService.getAllPostsAtOnce();
     this.transmitterService.getPostEmitter.subscribe(
       (post) => {
         var currentPost = post;

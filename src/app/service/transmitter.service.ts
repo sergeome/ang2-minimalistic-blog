@@ -9,6 +9,10 @@ export class TransmitterService {
   getPostEmitter = new EventEmitter<any>();
 
   postKey: any;
+
+  firstKey: any;
+  lastKey: any;
+
   imageURLEmitter = new EventEmitter<string>();
   isPostPostedEmitter = new EventEmitter<boolean>();
   isPostUpdatedEmitter = new EventEmitter<boolean>();
@@ -17,7 +21,7 @@ export class TransmitterService {
 
   constructor( private http: Http ) {}
 
-  getAllPostsAtOnceFromFirebase(){
+  getAllPostsAtOnce(){
     var query = firebase.database().ref("posts").orderByKey();
     query.once("value")
       .then( (snapshot) => {
@@ -31,49 +35,42 @@ export class TransmitterService {
       });
   }
 
-  test(){
-    // @data: messages, users, products... the dataset you want to do something with.
-    // @_start: min ID where you want to start fetching your data.
-    // @_end: max ID where you want to start fetching your data.
-    // @_n: Step size. In other words, how much data you want to fetch from Firebase.
-
-    //FIRST VALUE BY KEY
+  getFirstPostKey(callback){
     firebase.database().ref( "posts" ).orderByKey().limitToFirst( 1 ).on( "value", ( snapshot ) => {
       snapshot.forEach( ( childSnapshot ) => {
-          console.log( "First" );
-          console.log( childSnapshot.key );
+          this.firstKey = childSnapshot.key;
+          if (this.firstKey){
+            callback();
+          }
           return false;
         }
       )
     } );
+  }
 
-    //LAST VALUE BY KEY
+  getLastPostKey(callback){
     firebase.database().ref( "posts" ).orderByKey().limitToLast( 1 ).on( "value", ( snapshot ) => {
       snapshot.forEach( ( childSnapshot ) => {
-          console.log( "Last" );
-          console.log( childSnapshot.key );
+          this.lastKey = childSnapshot.key;
+          if (this.lastKey){
+            callback();
+          }
           return false;
         }
       )
     } );
+  }
 
-    // var data = [];
-    // var _start = 0;
-    // var _end = 2;
-    // var _n = 3;
-    // var getDataset = function() {
-    //   firebase.database().ref("posts").orderByKey().startAt("-KUTgK16Ozj1vDsJH-o8").endAt("-KUTgnLinNGD8MkSVEvq").limitToLast(_n).on("child_added", function(dataSnapshot) {
-    //     // data.push(dataSnapshot.val());
-    //     console.log( dataSnapshot.val() );
-    //     console.log( dataSnapshot );
-    //   });
-    //   _start = _start + _n;
-    //   _end = _end + _n;
-    // };
-    // getDataset();
+  getPosts(amountOfPostsToRetrieve){
+    console.log( this.firstKey );
+    console.log( this.lastKey );
+    firebase.database().ref("posts").orderByKey().startAt(this.firstKey).endAt(this.lastKey).limitToLast(amountOfPostsToRetrieve).on("child_added", (dataSnapshot) => {
+      console.log( dataSnapshot.val() );
+    });
+  }
 
-
-
+  test(){
+    this.getFirstPostKey(this.getLastPostKey(this.getPosts(3)));
   }
 
   onImageUpload( image, imageName ) {
