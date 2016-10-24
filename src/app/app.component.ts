@@ -1,6 +1,7 @@
-import { Component, OnInit, HostBinding, AfterViewChecked } from "@angular/core";
-import { LoginService } from "./service/login.service";
-import { FirebaseService } from "./service/firebase.service";
+import {Component, OnInit, HostBinding, AfterViewChecked} from "@angular/core";
+import {LoginService} from "./service/login.service";
+import {FirebaseService} from "./service/firebase.service";
+import {TransmitterService} from "./service/transmitter.service";
 
 @Component( {
   selector: 'body',
@@ -9,7 +10,7 @@ import { FirebaseService } from "./service/firebase.service";
 } )
 export class AppComponent implements OnInit, AfterViewChecked {
 
-  constructor( private firebaseService: FirebaseService, private loginService: LoginService) {}
+  constructor( private firebaseService: FirebaseService, private loginService: LoginService, private transmitterService: TransmitterService) {}
 
   @HostBinding( 'class.login' ) isLogin = false;
   @HostBinding( 'class.hide' ) bodyIsHidden = true;

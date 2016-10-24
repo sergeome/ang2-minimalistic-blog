@@ -1,6 +1,6 @@
-import { Component, OnInit, HostListener } from "@angular/core";
-import { TransmitterService } from "../../../service/transmitter.service";
-import { Post } from "../../../interfaces/post.interface";
+import {Component, OnInit, HostListener} from "@angular/core";
+import {TransmitterService} from "../../../service/transmitter.service";
+import {Post} from "../../../interfaces/post.interface";
 
 @Component({
   selector: 'app-all-posts',
@@ -10,7 +10,13 @@ import { Post } from "../../../interfaces/post.interface";
 export class AllPostsComponent implements OnInit {
 
   allPosts = [];
+  temproraryArray = [];
   loader = true;
+
+  isFirstLoad = true;
+
+  postAmountToLoad = 3;
+
   post: Post = {
     author: "Sergeome",
     content: "",
@@ -24,25 +30,17 @@ export class AllPostsComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   doSomething(event) {
+    this.isFirstLoad = false;
     if (window.scrollY === document.body.scrollHeight - window.innerHeight) {
       this.transmitterService.getPosts(2);
     }
   }
 
   ngOnInit() {
-    this.transmitterService.getPosts(2);
+    this.transmitterService.getPostsOnInit(this.postAmountToLoad);
     this.transmitterService.getPostEmitter.subscribe(
-      (post) => {
-        var currentPost = post;
-        currentPost.content = currentPost.content.substring(0, 400);
-        currentPost.content = currentPost.content + "...";
-
-        this.allPosts.unshift(currentPost);
-        if (this.allPosts.length == 2){
-          setTimeout( _ => {
-            this.loader = false;
-          }, 800)
-        }
+      (posts) => {
+        this.allPosts = this.allPosts.concat(posts);
       }
     )
   }
