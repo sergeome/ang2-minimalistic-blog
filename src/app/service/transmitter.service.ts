@@ -45,21 +45,28 @@ export class TransmitterService{
           this.lastKey = keys[1];
           this.amountOfPosts = keys[2];
 
-        console.log("First Key log " + this.firstKey);
-        console.log("Last Key log " + this.lastKey);
-        console.log(this.amountOfPosts);
-
-        // var isFirstEnter = true;
-        // var tempArray = [];
-        // firebase.database().ref("posts").orderByKey().limitToLast(amountOfPostsToRetrieve + 1).on('child_added', (childSnapshot, prevChildKey) => {
-        //   var currentPost = this.getPreviewExcerpt(childSnapshot.val());
-        //   tempArray.push(currentPost);
-        //   if ( this.firstKey == childSnapshot.key ){
-        //     this.getPostEmitter.emit(tempArray);
-        //   } else {
-        //
-        //   }
-        // });
+        var isFirstEnter = true;
+        var keepingFlag = false;
+        var tempArray = [];
+        firebase.database().ref("posts").orderByKey().limitToLast(amountOfPostsToRetrieve + 1).on('child_added', (childSnapshot, prevChildKey) => {
+          if ((isFirstEnter && this.firstKey == childSnapshot.key && this.amountOfPosts !== amountOfPostsToRetrieve + 1) || keepingFlag) {
+            console.log("Keeping first enter");
+            keepingFlag = true;
+            tempArray.push(this.getPreviewExcerpt(childSnapshot.val()));
+            if (tempArray.length == this.amountOfPosts) {
+              this.getPostEmitter.emit(tempArray.reverse());
+            }
+          } else if (isFirstEnter) {
+            isFirstEnter = false;
+            console.log("Going to the second first enter");
+          } else {
+            console.log("I'm on third enter");
+            tempArray.push(this.getPreviewExcerpt(childSnapshot.val()));
+            if (tempArray.length == amountOfPostsToRetrieve){
+              this.getPostEmitter.emit(tempArray.reverse());
+            }
+          }
+        });
 
         }
       );
