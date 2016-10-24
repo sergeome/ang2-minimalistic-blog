@@ -9,8 +9,11 @@ export class TransmitterService{
   getPostEmitter = new EventEmitter<any>();
 
   postKey: any;
+
   firstKey: any;
   lastKey: any;
+  nextKey: any;
+  amountOfPosts: any;
 
   imageURLEmitter = new EventEmitter<string>();
   isPostPostedEmitter = new EventEmitter<boolean>();
@@ -36,29 +39,27 @@ export class TransmitterService{
 
   getPostsOnInit(amountOfPostsToRetrieve){
     //Waiting two promises in order to get first and last keys in database
-    Promise.all([this.getFirstKey, this.getLastKey])
+    Promise.all([this.getFirstKey, this.getLastKey, this.getPostAmount])
       .then( (keys) => {
           this.firstKey = keys[0];
           this.lastKey = keys[1];
+          this.amountOfPosts = keys[2];
 
-        var isFirstEnter = true;
-        var tempArray = [];
-        firebase.database().ref("posts").orderByKey().limitToLast(amountOfPostsToRetrieve + 1).on('child_added', (childSnapshot, prevChildKey) => {
-          if (isFirstEnter) {
-            //If it's first value just remember the key of it but do nothing
-            isFirstEnter = false;
-          } else {
-            var currentPost = childSnapshot.val();
-            //Cutting content for preview for 400 symbols
-            currentPost.content = currentPost.content.substring(0, 400) + "...";
-            tempArray.push(currentPost);
-            if (tempArray.length == amountOfPostsToRetrieve) {
-              tempArray.reverse();
-              this.getPostEmitter.emit(tempArray);
-            }
-          }
+        console.log("First Key log " + this.firstKey);
+        console.log("Last Key log " + this.lastKey);
+        console.log(this.amountOfPosts);
 
-        });
+        // var isFirstEnter = true;
+        // var tempArray = [];
+        // firebase.database().ref("posts").orderByKey().limitToLast(amountOfPostsToRetrieve + 1).on('child_added', (childSnapshot, prevChildKey) => {
+        //   var currentPost = this.getPreviewExcerpt(childSnapshot.val());
+        //   tempArray.push(currentPost);
+        //   if ( this.firstKey == childSnapshot.key ){
+        //     this.getPostEmitter.emit(tempArray);
+        //   } else {
+        //
+        //   }
+        // });
 
         }
       );
@@ -116,4 +117,18 @@ export class TransmitterService{
       resolve (childSnapshot.key);
     });
   });
+
+  getPostAmount = new Promise((resolve, reject) => {
+    this.amountOfPosts = 0;
+    var query = firebase.database().ref("posts").orderByKey();
+    query.once("value")
+      .then((snapshot) => {
+        resolve(Object.keys(snapshot.val()).length);
+      });
+  });
+
+  getPreviewExcerpt(currentPost){
+    currentPost.content = currentPost.content.substring(0, 400) + "...";
+    return currentPost;
+  }
 }
