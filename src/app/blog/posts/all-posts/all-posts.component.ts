@@ -10,10 +10,8 @@ import {Post} from "../../../interfaces/post.interface";
 export class AllPostsComponent implements OnInit {
 
   allPosts = [];
-  temproraryArray = [];
-  loader = true;
 
-  isFirstLoad = true;
+  loader = true;
 
   postAmountToLoad = 3;
 
@@ -30,9 +28,8 @@ export class AllPostsComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   doSomething(event) {
-    this.isFirstLoad = false;
     if (window.scrollY === document.body.scrollHeight - window.innerHeight) {
-      this.transmitterService.getPosts(2);
+      this.transmitterService.getPostsOnLoad(this.postAmountToLoad);
     }
   }
 
@@ -41,6 +38,7 @@ export class AllPostsComponent implements OnInit {
     this.transmitterService.getPostEmitter.subscribe(
       (posts) => {
         this.allPosts = this.allPosts.concat(posts);
+        this.loader = false;
       }
     )
   }

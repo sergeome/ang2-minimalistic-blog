@@ -12,8 +12,10 @@ export class TransmitterService{
 
   firstKey: any;
   lastKey: any;
-  nextKey: any;
+  nextKey: any = "";
   amountOfPosts: any;
+  amountOfPostsToLoad: any = 0;
+  amountOfPostsLoaded: any = 0;
 
   imageURLEmitter = new EventEmitter<string>();
   isPostPostedEmitter = new EventEmitter<boolean>();
@@ -50,17 +52,17 @@ export class TransmitterService{
         var tempArray = [];
         firebase.database().ref("posts").orderByKey().limitToLast(amountOfPostsToRetrieve + 1).on('child_added', (childSnapshot, prevChildKey) => {
           if ((isFirstEnter && this.firstKey == childSnapshot.key && this.amountOfPosts !== amountOfPostsToRetrieve + 1) || keepingFlag) {
-            console.log("Keeping first enter");
             keepingFlag = true;
             tempArray.push(this.getPreviewExcerpt(childSnapshot.val()));
+            this.amountOfPostsLoaded++;
             if (tempArray.length == this.amountOfPosts) {
               this.getPostEmitter.emit(tempArray.reverse());
             }
           } else if (isFirstEnter) {
             isFirstEnter = false;
-            console.log("Going to the second first enter");
+            this.nextKey = childSnapshot.key;
           } else {
-            console.log("I'm on third enter");
+            this.amountOfPostsLoaded++;
             tempArray.push(this.getPreviewExcerpt(childSnapshot.val()));
             if (tempArray.length == amountOfPostsToRetrieve){
               this.getPostEmitter.emit(tempArray.reverse());
@@ -72,11 +74,38 @@ export class TransmitterService{
       );
   }
 
-  getPosts(amountOfPostsToRetrieve) {
-      firebase.database().ref("posts").orderByKey().endAt(this.lastKey).limitToLast(amountOfPostsToRetrieve + 1).on('child_added', (childSnapshot, prevChildKey) => {
-        this.lastKey = childSnapshot.key;
-        this.getPostEmitter.emit(childSnapshot.val());
+  getPostsOnLoad(amountOfPostsToRetrieve) {
+    if(this.nextKey){
+
+      var isFirstEnter = true;
+      var tempArray = [];
+      var keepingFlag = false;
+
+      this.amountOfPostsToLoad = this.amountOfPosts - this.amountOfPostsLoaded;
+
+      firebase.database().ref("posts").orderByKey().endAt(this.nextKey).limitToLast(amountOfPostsToRetrieve + 1).on('child_added', (childSnapshot, prevChildKey) => {
+        if ((isFirstEnter && this.firstKey == childSnapshot.key && this.amountOfPostsToLoad !== amountOfPostsToRetrieve + 1) || keepingFlag){
+          console.log("going inside");
+          keepingFlag = true;
+          tempArray.push(this.getPreviewExcerpt(childSnapshot.val()));
+          console.log("Temporary array length "+tempArray.length);
+          console.log("Amount of posts to load "+this.amountOfPostsToLoad);
+          if (tempArray.length == this.amountOfPostsToLoad) {
+            this.getPostEmitter.emit(tempArray.reverse());
+          }
+          this.nextKey = "";
+        } else if (isFirstEnter) {
+          isFirstEnter = false;
+          this.nextKey = childSnapshot.key;
+        } else {
+          this.amountOfPostsLoaded++;
+          tempArray.push(this.getPreviewExcerpt(childSnapshot.val()));
+          if (tempArray.length == amountOfPostsToRetrieve){
+            this.getPostEmitter.emit(tempArray.reverse());
+          }
+        }
       });
+    }
   }
 
 
