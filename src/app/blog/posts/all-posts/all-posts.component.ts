@@ -10,7 +10,7 @@ import {PostService} from "../../service/post.service";
 })
 export class AllPostsComponent implements OnInit {
 
-  loader = false;
+  loader = true;
 
   allPosts = [];
 
@@ -36,6 +36,7 @@ export class AllPostsComponent implements OnInit {
     this.postService.postsEmitter.subscribe(
       (posts) => {
         this.allPosts = posts;
+        this.loader = false;
       }
     );
     this.postService.onGetPost();
