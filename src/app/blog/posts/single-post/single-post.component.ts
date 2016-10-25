@@ -16,6 +16,7 @@ export class SinglePostComponent implements OnInit {
 
   post = {};
   postId = "";
+  loader = true;
 
   ngOnInit() {
     window.scrollTo(0,0);
@@ -24,9 +25,12 @@ export class SinglePostComponent implements OnInit {
       this.transmitterService.targetPostEmitter.subscribe(
         (post) => {
           this.post = post;
+          this.loader = false;
         }
       );
       this.transmitterService.getPostByKey(this.postId);
+    } else {
+      this.loader = false;
     }
   }
 }
