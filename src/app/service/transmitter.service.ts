@@ -23,6 +23,8 @@ export class TransmitterService{
   isPostPostedEmitter = new EventEmitter<boolean>();
   isPostUpdatedEmitter = new EventEmitter<boolean>();
 
+  targetPostEmitter = new EventEmitter<any>();
+
   dataBaseUrl = "https://sergeblog-bee9c.firebaseio.com";
 
   getAllPostsAtOnce() {
@@ -39,6 +41,13 @@ export class TransmitterService{
       });
   }
 
+  getPostByKey(key){
+    firebase.database().ref("posts").child(key).once('value').then( (snp) => {
+      this.targetPostEmitter.emit(snp.val());
+    });
+
+  }
+
   getPostsOnInit(amountOfPostsToRetrieve){
     //Waiting two promises in order to get first and last keys in database
     Promise.all([this.getFirstKey, this.getLastKey, this.getPostAmount])
@@ -53,7 +62,9 @@ export class TransmitterService{
         firebase.database().ref("posts").orderByKey().limitToLast(amountOfPostsToRetrieve + 1).on('child_added', (childSnapshot, prevChildKey) => {
           if ((isFirstEnter && this.firstKey == childSnapshot.key && this.amountOfPostsTotal !== amountOfPostsToRetrieve + 1) || keepingFlag) {
             keepingFlag = true;
-            tempArray.push(this.getPreviewExcerpt(childSnapshot.val()));
+            var tempPost = childSnapshot.val();
+            tempPost.key = childSnapshot.key;
+            tempArray.push(this.getPreviewExcerpt(tempPost));
             this.amountOfPostsIsLoaded++;
             if (tempArray.length == this.amountOfPostsTotal) {
               this.getPostEmitter.emit(tempArray.reverse());
@@ -63,7 +74,9 @@ export class TransmitterService{
             this.nextKey = childSnapshot.key;
           } else {
             this.amountOfPostsIsLoaded++;
-            tempArray.push(this.getPreviewExcerpt(childSnapshot.val()));
+            var tempPost = childSnapshot.val();
+            tempPost.key = childSnapshot.key;
+            tempArray.push(this.getPreviewExcerpt(tempPost));
             if (tempArray.length == amountOfPostsToRetrieve){
               this.getPostEmitter.emit(tempArray.reverse());
             }
@@ -86,7 +99,9 @@ export class TransmitterService{
       firebase.database().ref("posts").orderByKey().endAt(this.nextKey).limitToLast(amountOfPostsToRetrieve + 1).on('child_added', (childSnapshot, prevChildKey) => {
         if ((isFirstEnter && this.firstKey == childSnapshot.key && this.amountOfPostsToLoad !== amountOfPostsToRetrieve + 1) || keepingFlag){
           keepingFlag = true;
-          tempArray.push(this.getPreviewExcerpt(childSnapshot.val()));
+          var tempPost = childSnapshot.val();
+          tempPost.key = childSnapshot.key;
+          tempArray.push(this.getPreviewExcerpt(tempPost));
           if (tempArray.length == this.amountOfPostsToLoad) {
             this.getPostEmitter.emit(tempArray.reverse());
           }
@@ -96,7 +111,9 @@ export class TransmitterService{
           this.nextKey = childSnapshot.key;
         } else {
           this.amountOfPostsIsLoaded++;
-          tempArray.push(this.getPreviewExcerpt(childSnapshot.val()));
+          var tempPost = childSnapshot.val();
+          tempPost.key = childSnapshot.key;
+          tempArray.push(this.getPreviewExcerpt(tempPost));
           if (tempArray.length == amountOfPostsToRetrieve){
             this.getPostEmitter.emit(tempArray.reverse());
           }

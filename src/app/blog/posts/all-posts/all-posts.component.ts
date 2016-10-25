@@ -32,6 +32,10 @@ export class AllPostsComponent implements OnInit {
     }
   }
 
+  onNavigate(postKey){
+    this.postService.setTargetPost(postKey);
+  }
+
   ngOnInit() {
     this.postService.postsEmitter.subscribe(
       (posts) => {

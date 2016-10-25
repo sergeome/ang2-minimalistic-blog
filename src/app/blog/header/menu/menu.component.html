@@ -9,14 +9,6 @@
          routerLinkActive="active"
          [routerLinkActiveOptions]="{exact: true}">All Posts</a></li>
 
-    <!--<li (click)="isResponsive = !isResponsive;">-->
-      <!--<a [routerLink]="['']"-->
-         <!--&gt;Popular Posts</a></li>-->
-
-    <li (click)="isResponsive = !isResponsive;">
-      <a [routerLink]="['/singlepost']"
-         routerLinkActive="active">Single Post</a></li>
-
     <li (click)="isResponsive = !isResponsive;">
       <a [routerLink]="['/addpost']"
          *ngIf="isAuthenticated"

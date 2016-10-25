@@ -1,29 +1,14 @@
 <section class="page-body single-post">
   <article itemscope itemtype="https://schema.org/BlogPosting">
     <div class="post-date">Posted at
-      <time pubdate itemprop="datePublished">21.09.2013</time>
+      <time pubdate itemprop="datePublished">{{post.date}}</time>
     </div>
-    <h3>Lorem Hosting review</h3>
+    <h3>{{post.title}}</h3>
     <div class="content">
       <div class="post-image">
-        <img src="https://firebasestorage.googleapis.com/v0/b/sergeblog-bee9c.appspot.com/o/Content%20images%2Fhosting_pic.jpg?alt=media&token=fcf6781b-e2a3-4790-89ed-c6d5ac0b423b" alt="">
+        <img [src]="post.imageURL" alt="">
       </div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec quis molestie sapien. Duis risus turpis, tempor a enim sit amet, finibus ornare ex. Aenean faucibus venenatis est non luctus. Quisque eu eros vel diam commodo semper laoreet fermentum tellus. Donec condimentum, nibh at pulvinar eleifend, orci metus volutpat ipsum, ut viverra nunc metus in tortor. Nunc semper sit amet nisi a aliquam. Aliquam odio est, placerat in fringilla sed, efficitur at dui. Etiam ac dictum neque.
-        <a href="#">Donec lectus ligula</a>, posuere id turpis at, lobortis ultricies justo. Donec id metus eget nibh venenatis semper sed in justo. Pellentesque bibendum tortor nec lectus porttitor, et dictum eros porta. Cras sollicitudin odio ex, id vulputate orci consequat at. Morbi maximus vestibulum aliquet. Duis vel dolor tempus, tincidunt mi vitae, vehicula dui.
-      </p>
-      <p>
-        <span style="font-style: italic"> - Donec massa ex, tincidunt et congue ut, aliquam nec massa. Nunc in nunc sed eros porttitor accumsan. Vestibulum tempus nibh quis ipsum malesuada, quis molestie massa scelerisque. Etiam nec risus ipsum. Phasellus eu gravida dolor, vel iaculis eros. Mauris iaculis ac metus hendrerit porttitor. Pellentesque at porttitor arcu. Donec aliquet, elit nec semper pellentesque, nisi leo dictum tellus, ac placerat mauris diam imperdiet mauris. Cras vestibulum accumsan arcu sed molestie. In at auctor lectus, quis bibendum orci. Sed euismod enim vitae ultrices sagittis. Suspendisse potenti. Sed ut nulla vel purus scelerisque pellentesque. Etiam rutrum, libero ac volutpat ultrices, nisl sapien ultricies elit, eget hendrerit est ex eu ex.</span>
-      </p>
-      <p>
-        Sed suscipit felis nec nisi rutrum tristique id ac neque. Donec venenatis feugiat leo, vitae ultricies nunc vehicula eu. Proin viverra odio quis sapien gravida pretium. Sed ligula urna, elementum eget dolor at, porta rhoncus nulla. Fusce a rutrum dolor, vel semper mauris. Vivamus massa diam, pulvinar nec ipsum vitae, scelerisque molestie dui. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In id ex facilisis, auctor justo sed, tincidunt risus. Suspendisse semper, tortor sit amet tincidunt pharetra, lorem tellus rutrum metus, egestas egestas magna turpis eu nunc. In mollis, diam at feugiat commodo, metus urna sollicitudin nisl, ut eleifend orci eros sit amet quam. Donec euismod ultrices velit eu vehicula. Quisque id massa erat. Phasellus pulvinar dui vitae neque cursus tincidunt. Donec tincidunt justo quis fermentum malesuada. Suspendisse et semper mi.
-      </p>
-      <p>
-        In massa nunc, facilisis vitae ligula nec, accumsan ultrices nisl. Nullam efficitur fringilla erat, id ornare nisl finibus ut. Praesent non mollis elit, eget aliquet elit. Curabitur varius, eros a congue accumsan, est lectus vulputate purus, nec scelerisque odio turpis nec massa. Nullam vitae faucibus enim, in porta urna. Fusce imperdiet at dolor vel hendrerit. Fusce porttitor tellus lectus, ut sagittis sapien vehicula ut. In hac habitasse platea dictumst.
-      </p>
-      <p>
-        Nunc ut malesuada erat. Nullam velit metus, molestie ut nisi at, hendrerit fringilla dolor. Nullam tellus felis, ullamcorper vel elementum nec, finibus quis lorem. Mauris tincidunt scelerisque est, et maximus sem vulputate ac. Praesent luctus sed nulla quis mollis. Fusce viverra leo ac odio posuere, vel consectetur ligula mattis. Praesent in nunc risus. Fusce ipsum dui, finibus ut erat nec, malesuada mollis lacus. Praesent tempor libero a turpis dictum, ac facilisis libero tempor. Nulla vel scelerisque risus. Sed semper, leo at feugiat aliquam, massa eros feugiat urna, vel malesuada purus nulla a leo. Etiam at tellus vitae mauris pellentesque consectetur. Duis non turpis rutrum, convallis purus vel, tristique lacus. Nulla vestibulum lorem leo, quis eleifend metus accumsan in. Morbi volutpat magna eu erat porttitor, sit amet tincidunt ligula rutrum.
-      </p>
+      <p>{{post.content}}</p>
       <ul class="tags-list">
         <li><a href="#">Linux</a></li>
         <li><a href="#">Vps</a></li>

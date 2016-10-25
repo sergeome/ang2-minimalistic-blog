@@ -291,6 +291,7 @@ ul.tags-list li a:before {
 }
 .read-more:hover {
   padding: 0 20px 0 0;
+  cursor: pointer;
 }
 .read-more:hover:after {
   content: " ";

@@ -1,10 +1,11 @@
 import {Injectable, EventEmitter} from "@angular/core";
 import {TransmitterService} from "../../service/transmitter.service";
+import {Router} from "@angular/router";
 
 @Injectable()
 export class PostService{
 
-  constructor(private transmitterService: TransmitterService) {
+  constructor(private transmitterService: TransmitterService, private router: Router) {
     this.transmitterService.getPostEmitter.subscribe(
       (posts) => {
         this.allPosts = this.allPosts.concat(posts);
@@ -14,6 +15,8 @@ export class PostService{
   }
 
   postsEmitter = new EventEmitter<any>();
+
+  targetPost = {};
 
   allPosts = [];
   postAmountToLoad = 3;
@@ -46,6 +49,16 @@ export class PostService{
   getSavedStateFromService(){
     this.status = "loaded";
     this.postsEmitter.emit(this.allPosts);
+    console.log(this.allPosts);
+  }
+
+  setTargetPost(key) {
+    for (var i = 0; i < this.allPosts.length; i++) {
+      if (this.allPosts[i].key === key) {
+        this.targetPost =  this.allPosts[i];
+        this.router.navigate(['/singlepost', key]);
+      }
+    }
   }
 
 

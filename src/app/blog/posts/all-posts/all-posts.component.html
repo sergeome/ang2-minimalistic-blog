@@ -10,7 +10,7 @@
       <img [src]="post.imageURL" alt="">
     </div>
     <p>{{post.content}}</p>
-    <a href="#" class="read-more">Read more</a>
+    <a (click)="onNavigate(post.key)"  class="read-more">Read more</a>
   </div>
 </article>
 </section>
