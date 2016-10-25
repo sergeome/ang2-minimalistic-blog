@@ -19,7 +19,6 @@ export class FirebaseTestService {
 
   removeInstance(){
     this.firebaseApp.delete().then( _ => {
-      console.log( "app was deleted" );
     }, (error) => {
       console.log( error );
     } );

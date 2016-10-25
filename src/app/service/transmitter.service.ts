@@ -85,11 +85,8 @@ export class TransmitterService{
 
       firebase.database().ref("posts").orderByKey().endAt(this.nextKey).limitToLast(amountOfPostsToRetrieve + 1).on('child_added', (childSnapshot, prevChildKey) => {
         if ((isFirstEnter && this.firstKey == childSnapshot.key && this.amountOfPostsToLoad !== amountOfPostsToRetrieve + 1) || keepingFlag){
-          console.log("going inside");
           keepingFlag = true;
           tempArray.push(this.getPreviewExcerpt(childSnapshot.val()));
-          console.log("Temporary array length "+tempArray.length);
-          console.log("Amount of posts to load "+this.amountOfPostsToLoad);
           if (tempArray.length == this.amountOfPostsToLoad) {
             this.getPostEmitter.emit(tempArray.reverse());
           }

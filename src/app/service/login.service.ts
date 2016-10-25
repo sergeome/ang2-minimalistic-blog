@@ -1,6 +1,6 @@
-import { Injectable, EventEmitter } from "@angular/core";
-import { User } from "../interfaces/user.interface";
-import { Subject, Observable } from "rxjs";
+import {Injectable, EventEmitter} from "@angular/core";
+import {User} from "../interfaces/user.interface";
+import {Subject, Observable} from "rxjs";
 import * as firebase from "firebase";
 
 @Injectable()
@@ -21,11 +21,9 @@ export class LoginService {
     var self = this;
     firebase.auth().signInWithEmailAndPassword( user.email, user.password )
       .then(function () {
-      console.log( "Service - User was signed in" );
         self.isLoginCorrectEmitter.emit(true);
-        return 
+        return
     }, function (error) {
-        console.log( "Service - User wasn't signed in" );
         console.log( error );
         self.isLoginCorrectEmitter.emit(false);
       });
@@ -34,11 +32,9 @@ export class LoginService {
   onSignOut( ) {
     var self = this;
     firebase.auth().signOut().then( function () {
-      console.log( "Service - User was sign out" );
       self.isSignOutSuccessful.emit(true);
     }, function ( error ) {
       console.log( error );
-      console.log( "Service - There was an error during singing out" );
       self.isSignOutSuccessful.emit(false);
     } );
   }
