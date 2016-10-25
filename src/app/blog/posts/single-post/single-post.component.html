@@ -13,12 +13,7 @@
       </div>
       <p>{{post.content}}</p>
       <ul class="tags-list">
-        <li><a href="#">Linux</a></li>
-        <li><a href="#">Vps</a></li>
-        <li><a href="#">Web-development</a></li>
-        <li><a href="#">Web-development</a></li>
-        <li><a href="#">Web-development</a></li>
-        <li><a href="#">Web-development</a></li>
+        <li *ngFor="let oneTag of post.tags"><a href="#">{{oneTag}}</a></li>
       </ul>
     </div>
   </article>
