@@ -24,7 +24,7 @@ export class AllPostsComponent implements OnInit {
     date: ""
   };
 
-  constructor(private transmitterService: TransmitterService) { }
+  constructor(private transmitterService: TransmitterService) {}
 
   @HostListener('window:scroll', ['$event'])
   doSomething(event) {
