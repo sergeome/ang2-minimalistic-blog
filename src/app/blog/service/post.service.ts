@@ -7,9 +7,7 @@ export class PostService{
   constructor(private transmitterService: TransmitterService) {
     this.transmitterService.getPostEmitter.subscribe(
       (posts) => {
-        console.log("get posts from transmitter");
         this.allPosts = this.allPosts.concat(posts);
-        console.log(this.allPosts);
         this.postsEmitter.emit(this.allPosts);
       }
     )
