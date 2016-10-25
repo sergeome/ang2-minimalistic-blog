@@ -6,6 +6,8 @@ import * as firebase from "firebase";
 @Injectable()
 export class TransmitterService{
 
+  constructor(private http: Http) {}
+
   getPostEmitter = new EventEmitter<any>();
 
   postKey: any;
@@ -22,8 +24,6 @@ export class TransmitterService{
   isPostUpdatedEmitter = new EventEmitter<boolean>();
 
   dataBaseUrl = "https://sergeblog-bee9c.firebaseio.com";
-
-  constructor(private http: Http) {}
 
   getAllPostsAtOnce() {
     var query = firebase.database().ref("posts").orderByKey();
@@ -117,7 +117,6 @@ export class TransmitterService{
   }
 
   sendPost(post: any) {
-    // post.timestamp = firebase.database.ServerValue.TIMESTAMP;
     this.postKey = firebase.database().ref().child('posts').push(post).key;
     if (this.postKey) {
       this.isPostPostedEmitter.emit(true);

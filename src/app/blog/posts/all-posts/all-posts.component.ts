@@ -1,6 +1,7 @@
 import {Component, OnInit, HostListener} from "@angular/core";
 import {TransmitterService} from "../../../service/transmitter.service";
 import {Post} from "../../../interfaces/post.interface";
+import {PostService} from "../../service/post.service";
 
 @Component({
   selector: 'app-all-posts',
@@ -9,11 +10,9 @@ import {Post} from "../../../interfaces/post.interface";
 })
 export class AllPostsComponent implements OnInit {
 
+  loader = false;
+
   allPosts = [];
-
-  loader = true;
-
-  postAmountToLoad = 3;
 
   post: Post = {
     author: "Sergeome",
@@ -24,23 +23,26 @@ export class AllPostsComponent implements OnInit {
     date: ""
   };
 
-  constructor(private transmitterService: TransmitterService) {}
+  constructor(private transmitterService: TransmitterService, private postService: PostService) {}
 
   @HostListener('window:scroll', ['$event'])
   doSomething(event) {
     if (window.scrollY === document.body.scrollHeight - window.innerHeight) {
-      this.transmitterService.getPostsOnLoad(this.postAmountToLoad);
+      this.postService.onGetPost();
     }
   }
 
   ngOnInit() {
-    this.transmitterService.getPostsOnInit(this.postAmountToLoad);
-    this.transmitterService.getPostEmitter.subscribe(
+    this.postService.postsEmitter.subscribe(
       (posts) => {
-        this.allPosts = this.allPosts.concat(posts);
-        this.loader = false;
+        this.allPosts = posts;
       }
-    )
+    );
+    this.postService.onGetPost();
+  }
+
+  ngOnDestroy(){
+    this.postService.status = "isDestroyed";
   }
 
 
