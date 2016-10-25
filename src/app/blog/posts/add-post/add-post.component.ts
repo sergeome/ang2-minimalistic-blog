@@ -1,7 +1,7 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { TransmitterService } from "../../../service/transmitter.service";
-import { Post } from "../../../interfaces/post.interface";
+import {Component, OnInit, ElementRef, ViewChild} from "@angular/core";
+import {FormGroup, FormControl, Validators} from "@angular/forms";
+import {TransmitterService} from "../../../service/transmitter.service";
+import {Post} from "../../../interfaces/post.interface";
 
 declare var post: Post;
 
@@ -74,7 +74,9 @@ export class AddPostComponent implements OnInit {
   onSubmitPost(){
     this.post.title = this.postForm.value.title;
     this.post.content = this.postForm.value.content;
-    this.post.tags = this.postForm.value.tags.split(" ");
+    if (this.postForm.value.tags) {
+      this.post.tags = this.postForm.value.tags.split(" ");
+    }
     this.post.date = this.getToday();
     this.transmitterService.sendPost(this.post);
   }
