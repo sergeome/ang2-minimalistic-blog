@@ -49,7 +49,6 @@ export class PostService{
   getSavedStateFromService(){
     this.status = "loaded";
     this.postsEmitter.emit(this.allPosts);
-    console.log(this.allPosts);
   }
 
   setTargetPost(key) {

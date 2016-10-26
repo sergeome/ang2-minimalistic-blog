@@ -34,3 +34,6 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+
+#firebase configuration hide
+/src/app/service/firebase.service.ts
