@@ -24,8 +24,9 @@ export class TransmitterService{
   isPostUpdatedEmitter = new EventEmitter<boolean>();
 
   targetPostEmitter = new EventEmitter<any>();
+  addedPostEmitter = new EventEmitter<any>();
 
-  dataBaseUrl = "https://sergeblog-bee9c.firebaseio.com";
+  subscribedToAsync = false;
 
   getAllPostsAtOnce() {
     var query = firebase.database().ref("posts").orderByKey();
@@ -46,6 +47,14 @@ export class TransmitterService{
       this.targetPostEmitter.emit(snp.val());
     });
 
+  }
+
+  getPostAsync(){
+    var ref = firebase.database().ref("posts");
+    ref.orderByKey().limitToLast(1).on('child_added', (childSnapshot, prevChildKey) => {
+      // this.addedPostEmitter.emit(childSnapshot.val());
+      console.log(childSnapshot.val());
+    });
   }
 
   getPostsOnInit(amountOfPostsToRetrieve){
@@ -122,7 +131,6 @@ export class TransmitterService{
     }
   }
 
-
   onImageUpload(image, imageName) {
     var postImageDirectory = "Post Images/";
     firebase.storage().ref(postImageDirectory + imageName).put(image).then((snapshot) => {
@@ -137,6 +145,10 @@ export class TransmitterService{
     this.postKey = firebase.database().ref().child('posts').push(post).key;
     if (this.postKey) {
       this.isPostPostedEmitter.emit(true);
+      if (!this.subscribedToAsync){
+        this.subscribedToAsync = true;
+        this.getPostAsync();
+      }
     } else {
       this.isPostPostedEmitter.emit(false);
     }

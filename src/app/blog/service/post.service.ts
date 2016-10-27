@@ -38,6 +38,7 @@ export class PostService{
   }
 
   getPostsOnInit(){
+    this.getPostOnAdd();
     this.status = "loaded";
     this.transmitterService.getPostsOnInit(this.postAmountToLoad);
   }
@@ -59,6 +60,16 @@ export class PostService{
       }
     }
   }
+
+  getPostOnAdd(){
+    this.transmitterService.addedPostEmitter.subscribe(
+      (post) => {
+        this.postsEmitter.emit(this.allPosts.unshift(post));
+      }
+    );
+  }
+
+
 
 
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, HostListener} from "@angular/core";
+import {Component, OnInit, HostListener, OnDestroy} from "@angular/core";
 import {TransmitterService} from "../../../service/transmitter.service";
 import {Post} from "../../../interfaces/post.interface";
 import {PostService} from "../../service/post.service";
@@ -8,7 +8,7 @@ import {PostService} from "../../service/post.service";
   templateUrl: 'all-posts.component.html',
   styleUrls: ['all-posts.component.css']
 })
-export class AllPostsComponent implements OnInit {
+export class AllPostsComponent implements OnInit, OnDestroy {
 
   loader = true;
 
