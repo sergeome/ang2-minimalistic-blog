@@ -38,11 +38,11 @@ export class AllPostsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.postService.postsEmitter.subscribe(
-      (posts) => {
-        posts.forEach((post) => {
+      (data) => {
+        data.forEach((post) => {
           var tempPost = this.getPreviewExcerpt(post);
           this.allPosts.push(tempPost);
-          if (this.allPosts.length == posts.length) {
+          if (this.allPosts.length == data.length) {
             this.loader = false;
           }
         });
