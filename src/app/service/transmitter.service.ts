@@ -11,7 +11,6 @@ export class TransmitterService{
   getPostEmitter = new EventEmitter<any>();
 
   postKey: any;
-
   firstKey: any;
   lastKey: any;
   nextKey: any = "";
@@ -28,27 +27,14 @@ export class TransmitterService{
 
   subscribedToAsync = false;
 
-  getAllPostsAtOnce() {
-    var query = firebase.database().ref("posts").orderByKey();
-    query.once("value")
-      .then((snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-          // key will be "ada" the first time and "alan" the second time
-          var key = childSnapshot.key;
-          // childData will be the actual contents of the child
-          var childData = childSnapshot.val();
-          this.getPostEmitter.emit(childData);
-        });
-      });
-  }
-
+  //Get target post when user was navigating via direct url
   getPostByKey(key){
-    firebase.database().ref("posts").child(key).once('value').then( (snp) => {
-      this.targetPostEmitter.emit(snp.val());
+    firebase.database().ref("posts").child(key).once('value').then( (snapshot) => {
+      this.targetPostEmitter.emit(snapshot.val());
     });
-
   }
 
+  //Asynchronously receive post when it was added
   getPostAsync(){
     var ref = firebase.database().ref("posts");
     ref.orderByKey().limitToLast(1).on('child_added', (childSnapshot, prevChildKey) => {
@@ -56,8 +42,9 @@ export class TransmitterService{
     });
   }
 
+  //Getting initial amount of posts when application was loaded
   getPostsOnInit(amountOfPostsToRetrieve){
-    //Waiting two promises in order to get first and last keys in database
+    //Waiting three promises in order to get first, last keys and amount of posts in database
     Promise.all([this.getFirstKey, this.getLastKey, this.getPostAmount])
       .then( (keys) => {
           this.firstKey = keys[0];
@@ -95,6 +82,7 @@ export class TransmitterService{
       );
   }
 
+  //Getting rest amount of posts when application when infinity scroll was performed
   getPostsOnLoad(amountOfPostsToRetrieve) {
     if(this.nextKey){
 
@@ -130,6 +118,7 @@ export class TransmitterService{
     }
   }
 
+  //Get image url when it was uploaded to the Firebase
   onImageUpload(image, imageName) {
     var postImageDirectory = "Post Images/";
     firebase.storage().ref(postImageDirectory + imageName).put(image).then((snapshot) => {
@@ -140,6 +129,7 @@ export class TransmitterService{
 
   }
 
+  //Sending post to the firebase
   sendPost(post: any) {
     this.postKey = firebase.database().ref().child('posts').push(post).key;
     if (this.postKey) {
@@ -153,6 +143,7 @@ export class TransmitterService{
     }
   }
 
+  //Updating post in the firebase
   editPost(post: any) {
     var updates = {};
     updates['/posts/' + this.postKey] = post;
@@ -166,18 +157,21 @@ export class TransmitterService{
     );
   }
 
+  //Promise to the first key in the firebase
   getFirstKey = new Promise((resolve, reject) => {
     firebase.database().ref("posts").orderByKey().limitToFirst(1).on('child_added', (childSnapshot, prevChildKey) => {
       resolve (childSnapshot.key);
     });
   });
 
+  //Promise to the last key in the firebase
   getLastKey = new Promise((resolve, reject) => {
     firebase.database().ref("posts").orderByKey().limitToLast(1).on('child_added', (childSnapshot, prevChildKey) => {
       resolve (childSnapshot.key);
     });
   });
 
+  //Promise to get total amount of posts in the firebase
   getPostAmount = new Promise((resolve, reject) => {
     this.amountOfPostsTotal = 0;
     var query = firebase.database().ref("posts").orderByKey();
