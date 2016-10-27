@@ -46,6 +46,7 @@ export class AllPostsComponent implements OnInit, OnDestroy {
     this.postService.onGetPost();
   }
 
+  //Setting "isDestroyed" status in order to save current state to the service.
   ngOnDestroy(){
     this.postService.status = "isDestroyed";
   }
