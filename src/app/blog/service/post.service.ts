@@ -38,7 +38,7 @@ export class PostService{
   }
 
   getPostsOnInit(){
-    this.getPostOnAdd();
+    this.getPostOnAdd(); //Subscribe to the asynchronous posts updating
     this.status = "loaded";
     this.transmitterService.getPostsOnInit(this.postAmountToLoad);
   }
