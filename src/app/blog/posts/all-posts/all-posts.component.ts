@@ -39,8 +39,13 @@ export class AllPostsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.postService.postsEmitter.subscribe(
       (posts) => {
-        this.allPosts = posts;
-        this.loader = false;
+        posts.forEach((post) => {
+          var tempPost = this.getPreviewExcerpt(post);
+          this.allPosts.push(tempPost);
+          if (this.allPosts.length == posts.length) {
+            this.loader = false;
+          }
+        });
       }
     );
     this.postService.onGetPost();
@@ -48,6 +53,12 @@ export class AllPostsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.postService.status = "isDestroyed";
+  }
+
+  //Setting Post Preview by assigning new property 'contentPreview'
+  getPreviewExcerpt(currentPost){
+    currentPost.contentPreview = currentPost.content.substring(0, 400) + "...";
+    return currentPost;
   }
 
 

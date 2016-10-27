@@ -63,8 +63,8 @@ export class PostService{
 
   getPostOnAdd(){
     this.transmitterService.addedPostEmitter.subscribe(
-      (post) => {
-        this.postsEmitter.emit(this.allPosts.unshift(post));
+      (data) => {
+        this.postsEmitter.emit(this.allPosts.unshift(data));
       }
     );
   }

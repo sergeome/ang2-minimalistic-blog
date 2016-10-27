@@ -52,8 +52,7 @@ export class TransmitterService{
   getPostAsync(){
     var ref = firebase.database().ref("posts");
     ref.orderByKey().limitToLast(1).on('child_added', (childSnapshot, prevChildKey) => {
-      // this.addedPostEmitter.emit(childSnapshot.val());
-      console.log(childSnapshot.val());
+      this.addedPostEmitter.emit(childSnapshot.val());
     });
   }
 
@@ -73,7 +72,7 @@ export class TransmitterService{
             keepingFlag = true;
             var tempPost = childSnapshot.val();
             tempPost.key = childSnapshot.key;
-            tempArray.push(this.getPreviewExcerpt(tempPost));
+            tempArray.push(tempPost);
             this.amountOfPostsIsLoaded++;
             if (tempArray.length == this.amountOfPostsTotal) {
               this.getPostEmitter.emit(tempArray.reverse());
@@ -85,7 +84,7 @@ export class TransmitterService{
             this.amountOfPostsIsLoaded++;
             var tempPost = childSnapshot.val();
             tempPost.key = childSnapshot.key;
-            tempArray.push(this.getPreviewExcerpt(tempPost));
+            tempArray.push(tempPost);
             if (tempArray.length == amountOfPostsToRetrieve){
               this.getPostEmitter.emit(tempArray.reverse());
             }
@@ -110,7 +109,7 @@ export class TransmitterService{
           keepingFlag = true;
           var tempPost = childSnapshot.val();
           tempPost.key = childSnapshot.key;
-          tempArray.push(this.getPreviewExcerpt(tempPost));
+          tempArray.push(tempPost);
           if (tempArray.length == this.amountOfPostsToLoad) {
             this.getPostEmitter.emit(tempArray.reverse());
           }
@@ -122,7 +121,7 @@ export class TransmitterService{
           this.amountOfPostsIsLoaded++;
           var tempPost = childSnapshot.val();
           tempPost.key = childSnapshot.key;
-          tempArray.push(this.getPreviewExcerpt(tempPost));
+          tempArray.push(tempPost);
           if (tempArray.length == amountOfPostsToRetrieve){
             this.getPostEmitter.emit(tempArray.reverse());
           }
@@ -187,9 +186,4 @@ export class TransmitterService{
         resolve(Object.keys(snapshot.val()).length);
       });
   });
-
-  getPreviewExcerpt(currentPost){
-    currentPost.content = currentPost.content.substring(0, 400) + "...";
-    return currentPost;
-  }
 }
