@@ -100,7 +100,7 @@ export class AddPostComponent implements OnInit {
     return mm + "." + dd + "." + yyyy;
   }
 
-  isPostPostedSucess(){
+  isPostPostedSuccess(){
     this.modal.alert()
       .size('lg')
       .showClose(false)
@@ -111,15 +111,49 @@ export class AddPostComponent implements OnInit {
       .open();
   }
 
+  isPostPostedError(){
+    this.modal.alert()
+      .size('lg')
+      .showClose(false)
+      .title('')
+      .body(`
+            <p>There was an error during publishing your post</p>
+           `)
+      .open();
+  }
+
+  isPostUpdatedSuccess(){
+    this.modal.alert()
+      .size('lg')
+      .showClose(false)
+      .title('')
+      .body(`
+            <p>Your post was successfully updated!</p>
+           `)
+      .open();
+  }
+
+  isPostUpdatedError(){
+    this.modal.alert()
+      .size('lg')
+      .showClose(false)
+      .title('')
+      .body(`
+            <p>There was an error during updating!</p>
+           `)
+      .open();
+  }
+
   ngOnInit() {
     this.transmitterService.isPostPostedEmitter.subscribe(
       (isPosted) => {
         if (isPosted) {
-          this.isPostPostedSucess();
+          this.isPostPostedSuccess();
           this.postStatus = "posted";
           this.ctaSubmitTitle = "Republish";
         } else {
           this.postStatus = "error during posting";
+          this.isPostPostedError();
         }
       }
     );
@@ -128,8 +162,10 @@ export class AddPostComponent implements OnInit {
       (isUpdated) => {
         if (isUpdated) {
           this.postStatus = "updated";
+          this.isPostUpdatedSuccess();
         } else {
           this.postStatus = "error during update";
+          this.isPostUpdatedError();
         }
       }
     );
