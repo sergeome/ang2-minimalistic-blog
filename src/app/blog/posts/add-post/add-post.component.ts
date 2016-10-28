@@ -1,7 +1,9 @@
-import {Component, OnInit, ElementRef, ViewChild} from "@angular/core";
+import {Component, OnInit, ElementRef, ViewChild, ViewContainerRef} from "@angular/core";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {TransmitterService} from "../../../service/transmitter.service";
 import {Post} from "../../../interfaces/post.interface";
+import {Overlay} from "angular2-modal";
+import {Modal} from "angular2-modal/plugins/bootstrap/modal";
 
 declare var post: Post;
 
@@ -28,7 +30,8 @@ export class AddPostComponent implements OnInit {
     date: ""
   };
 
-  constructor(private transmitterService: TransmitterService) {
+  constructor(private transmitterService: TransmitterService, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal) {
+    overlay.defaultViewContainer = vcRef;
     this.postForm = new FormGroup({
       'title': new FormControl('', Validators.required),
       'content': new FormControl('', Validators.required),
@@ -97,10 +100,22 @@ export class AddPostComponent implements OnInit {
     return mm + "." + dd + "." + yyyy;
   }
 
+  isPostPostedSucess(){
+    this.modal.alert()
+      .size('lg')
+      .showClose(false)
+      .title('')
+      .body(`
+            <p>Your post was successfully published!</p>
+           `)
+      .open();
+  }
+
   ngOnInit() {
     this.transmitterService.isPostPostedEmitter.subscribe(
       (isPosted) => {
         if (isPosted) {
+          this.isPostPostedSucess();
           this.postStatus = "posted";
           this.ctaSubmitTitle = "Republish";
         } else {

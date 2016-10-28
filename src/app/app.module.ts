@@ -1,4 +1,3 @@
-//System Modules
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule} from "@angular/core";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -20,12 +19,8 @@ import {NotAuthorizedGuard} from "./blog/not-authorized.guard";
 import {TransmitterService} from "./service/transmitter.service";
 import {FirebaseService} from "./service/firebase.service";
 import {PostService} from "./blog/service/post.service";
-
-//Main Component
-
-//Blog Components
-
-//Login Component
+import {ModalModule} from "angular2-modal";
+import {BootstrapModalModule} from "angular2-modal/plugins/bootstrap";
 
 @NgModule({
   declarations: [
@@ -46,7 +41,9 @@ import {PostService} from "./blog/service/post.service";
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
-    routing
+    routing,
+    ModalModule.forRoot(),
+    BootstrapModalModule
   ],
   providers: [
     LoginService,
