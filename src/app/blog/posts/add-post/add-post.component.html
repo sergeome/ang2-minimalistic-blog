@@ -1,3 +1,6 @@
+<div *ngIf="isLoading" class="loader-wrapper">
+  <div class="loader"></div>
+</div>
 <section class="page-body write-post">
   <article itemscope itemtype="https://schema.org/BlogPosting">
     <form class="input-fields" [formGroup]="postForm">

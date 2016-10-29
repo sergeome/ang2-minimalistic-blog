@@ -21,6 +21,8 @@ export class AddPostComponent implements OnInit {
 
   postStatus = "new";
 
+  isLoading = false;
+
   post: Post = {
     author: "Sergeome",
     content: "",
@@ -75,6 +77,7 @@ export class AddPostComponent implements OnInit {
   }
 
   onSubmitPost(){
+    this.onWaiting();
     this.post.title = this.postForm.value.title;
     this.post.content = this.postForm.value.content;
     if (this.postForm.value.tags) {
@@ -85,6 +88,7 @@ export class AddPostComponent implements OnInit {
   }
 
   onEditPost() {
+    this.onWaiting();
     this.post.title = this.postForm.value.title;
     this.post.content = this.postForm.value.content;
     this.post.tags = this.postForm.value.tags.split(" ");
@@ -144,9 +148,14 @@ export class AddPostComponent implements OnInit {
       .open();
   }
 
+  onWaiting(){
+    this.isLoading = true;
+  }
+
   ngOnInit() {
     this.transmitterService.isPostPostedEmitter.subscribe(
       (isPosted) => {
+        this.isLoading = false;
         if (isPosted) {
           this.isPostPostedSuccess();
           this.postStatus = "posted";
@@ -160,6 +169,7 @@ export class AddPostComponent implements OnInit {
 
     this.transmitterService.isPostUpdatedEmitter.subscribe(
       (isUpdated) => {
+        this.isLoading = false;
         if (isUpdated) {
           this.postStatus = "updated";
           this.isPostUpdatedSuccess();
