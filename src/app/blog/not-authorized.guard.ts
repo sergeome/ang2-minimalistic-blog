@@ -14,9 +14,13 @@ export class NotAuthorizedGuard implements CanActivate {
     this.loginService.isAuthenticated().subscribe(
       (authState) => {
         this.isAuthenticated = authState;
-        if (this.isDirectAccess){
+        if (this.isDirectAccess && this.isAuthenticated){
         this.isDirectAccess = false;
         this.router.navigate(['/addpost']);
+        }
+        else if (this.isDirectAccess && !this.isAuthenticated) {
+          this.isDirectAccess = false;
+          this.router.navigate(['/login']);
         }
       }
     )
