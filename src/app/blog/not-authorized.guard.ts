@@ -13,7 +13,6 @@ export class NotAuthorizedGuard implements CanActivate {
   constructor(private loginService: LoginService, private router:Router) {
     this.loginService.isAuthenticated().subscribe(
       (authState) => {
-        console.log(this.isDirectAccess);
         this.isAuthenticated = authState;
         if (this.isDirectAccess){
         this.isDirectAccess = false;
