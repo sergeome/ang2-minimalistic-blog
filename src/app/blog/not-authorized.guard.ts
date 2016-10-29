@@ -29,6 +29,7 @@ export class NotAuthorizedGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot ): Observable<boolean> | boolean {
     this.isDirectAccess = true;
     if (typeof this.isAuthenticated !== 'undefined') {
+      this.isDirectAccess = false;
       if (this.isAuthenticated){
         return Observable.of(true);
       } else {

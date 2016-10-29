@@ -160,6 +160,7 @@ export class AddPostComponent implements OnInit {
           this.isPostPostedSuccess();
           this.postStatus = "posted";
           this.ctaSubmitTitle = "Republish";
+          console.log("POSTED");
         } else {
           this.postStatus = "error during posting";
           this.isPostPostedError();
