@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { LoginService } from "../service/login.service";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { Subscription, Observable } from "rxjs";
+import {Component, OnInit, OnDestroy} from "@angular/core";
+import {LoginService} from "../service/login.service";
+import {FormGroup, FormControl, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {Subscription, Observable} from "rxjs";
 
 @Component({
   selector: 'app-login',
@@ -67,10 +67,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onRedirect(){
-    var self = this;
     this.getRemainingTime();
-    setTimeout(function () {
-      self.router.navigate(['/']);
+    setTimeout(x => {
+      this.router.navigate(['/']);
     }, this.timerRemains);
   }
 
