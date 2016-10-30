@@ -11,7 +11,6 @@ import {Router} from "@angular/router";
 export class MenuComponent implements OnInit, OnDestroy {
 
   isResponsive = false;
-  isSignOutSuccessful: boolean;
 
   private subscription: Subscription;
   private isSignOutSubscription: Subscription;
@@ -21,9 +20,6 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   onLogout(){
     this.loginService.onSignOut();
-    if(this.isSignOutSuccessful){
-      this.router.navigate(['/']);
-    }
   }
 
   ngOnInit() {
@@ -32,7 +28,11 @@ export class MenuComponent implements OnInit, OnDestroy {
     );
 
     this.isSignOutSubscription = this.loginService.isSignOutSuccessful.subscribe(
-      signOutState => this.isSignOutSuccessful = signOutState
+      signOutState => {
+        if(signOutState){
+          this.router.navigate(['/']);
+        }
+      }
     )
   }
 
