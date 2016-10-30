@@ -36,9 +36,12 @@ export class TransmitterService{
 
   //Asynchronously receive post when it was added
   getPostAsync(){
+    var tempPost;
     var ref = firebase.database().ref("posts");
     ref.orderByKey().limitToLast(1).on('child_added', (childSnapshot, prevChildKey) => {
-      this.addedPostEmitter.emit(childSnapshot.val());
+      tempPost = childSnapshot.val();
+      tempPost.key = childSnapshot.key;
+      this.addedPostEmitter.emit(tempPost);
     });
   }
 
