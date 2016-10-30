@@ -187,9 +187,15 @@ export class AddPostComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.isPostedSubscription.unsubscribe();
-    this.isUpdatedSubscription.unsubscribe();
-    this.imageURLSubscription.unsubscribe();
+    if (this.isPostedSubscription) {
+      this.isPostedSubscription.unsubscribe();
+    }
+    if (this.isUpdatedSubscription) {
+      this.isUpdatedSubscription.unsubscribe();
+    }
+    if (this.imageURLSubscription) {
+      this.imageURLSubscription.unsubscribe();
+    }
   }
 
 }

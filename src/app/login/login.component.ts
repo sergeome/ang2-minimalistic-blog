@@ -48,6 +48,25 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.isLoading = true;
   }
 
+  onRedirect(){
+    this.getRemainingTime();
+    setTimeout( () => {
+      if (this.queryParams) {
+        this.router.navigate(['/' + this.queryParams]);
+      } else {
+        this.router.navigate(['/']);
+      }
+    }, this.timerRemains);
+  }
+
+  getRemainingTime(){
+    let timer = Observable.timer(1000,1000);
+    timer.subscribe( t => {
+      this.timerRemains -= 1000;
+    });
+    this.timerRemains = this.redirectAfter;
+  }
+
   ngOnInit() {
     //Adding body class when component is loaded
     this.loginService.loginState(true);
@@ -75,25 +94,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.subscriptionForQueryParams = this.route.queryParams.subscribe(
       queryParams => this.queryParams = queryParams['page']
     );
-  }
-
-  onRedirect(){
-    this.getRemainingTime();
-    setTimeout( () => {
-      if (this.queryParams) {
-        this.router.navigate(['/' + this.queryParams]);
-      } else {
-        this.router.navigate(['/']);
-      }
-    }, this.timerRemains);
-  }
-
-  getRemainingTime(){
-    let timer = Observable.timer(1000,1000);
-    timer.subscribe( t => {
-      this.timerRemains -= 1000;
-    });
-    this.timerRemains = this.redirectAfter;
   }
 
   ngOnDestroy(){

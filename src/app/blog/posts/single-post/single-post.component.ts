@@ -37,6 +37,8 @@ export class SinglePostComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    this.targetPostEmitterSubscription.unsubscribe();
+    if (this.targetPostEmitterSubscription) {
+      this.targetPostEmitterSubscription.unsubscribe();
+    }
   }
 }
