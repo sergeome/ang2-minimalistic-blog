@@ -54,8 +54,8 @@ export class AllPostsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.postEmitterSubscription = this.postService.postsEmitter.subscribe(
       (data) => {
-       this.allPosts = this.getPreviewExcerpt(data);
-       this.loader = false;
+        this.allPosts = this.getPreviewExcerpt(data);
+        this.loader = false;
       }
     );
     this.postService.onGetPost();

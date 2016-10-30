@@ -85,9 +85,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.isLoginCorrectSubscription = this.loginService.isLoginCorrectEmitter.subscribe(
       isLoginCorrect => {
         this.isLoginCorrect = isLoginCorrect;
-        if (this.isLoginCorrect) {
-          this.isLoading = false;
-        }
+        this.isLoading = false;
       }
     );
 
