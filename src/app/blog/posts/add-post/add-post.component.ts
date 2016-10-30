@@ -1,9 +1,10 @@
-import {Component, OnInit, ElementRef, ViewChild, ViewContainerRef} from "@angular/core";
+import {Component, OnInit, ElementRef, ViewChild, ViewContainerRef, OnDestroy} from "@angular/core";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {TransmitterService} from "../../../service/transmitter.service";
 import {Post} from "../../../interfaces/post.interface";
 import {Overlay} from "angular2-modal";
 import {Modal} from "angular2-modal/plugins/bootstrap/modal";
+import {Subscription} from "rxjs";
 
 declare var post: Post;
 
@@ -13,7 +14,7 @@ declare var post: Post;
   styleUrls: ['add-post.component.css']
 })
 
-export class AddPostComponent implements OnInit {
+export class AddPostComponent implements OnInit, OnDestroy {
 
   postForm: FormGroup;
 
@@ -31,6 +32,9 @@ export class AddPostComponent implements OnInit {
     tags: [],
     date: ""
   };
+
+  isPostedSubscription: Subscription;
+  isUpdatedSubscription: Subscription;
 
   constructor(private transmitterService: TransmitterService, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal) {
     overlay.defaultViewContainer = vcRef;
@@ -153,14 +157,13 @@ export class AddPostComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.transmitterService.isPostPostedEmitter.subscribe(
+    this.isPostedSubscription = this.transmitterService.isPostPostedEmitter.subscribe(
       (isPosted) => {
         this.isLoading = false;
         if (isPosted) {
           this.isPostPostedSuccess();
           this.postStatus = "posted";
           this.ctaSubmitTitle = "Republish";
-          console.log("POSTED");
         } else {
           this.postStatus = "error during posting";
           this.isPostPostedError();
@@ -168,7 +171,7 @@ export class AddPostComponent implements OnInit {
       }
     );
 
-    this.transmitterService.isPostUpdatedEmitter.subscribe(
+    this.isUpdatedSubscription = this.transmitterService.isPostUpdatedEmitter.subscribe(
       (isUpdated) => {
         this.isLoading = false;
         if (isUpdated) {
@@ -180,6 +183,11 @@ export class AddPostComponent implements OnInit {
         }
       }
     );
+  }
+
+  ngOnDestroy() {
+    this.isPostedSubscription.unsubscribe();
+    this.isUpdatedSubscription.unsubscribe();
   }
 
 }
