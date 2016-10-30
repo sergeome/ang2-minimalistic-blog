@@ -9,6 +9,7 @@ import {Subscription, Observable} from "rxjs";
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit, OnDestroy {
 
   //Verifying is login correct for "Error Message" on invalid credentials
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   isLoading = false;
   private subscriptionForAuthState: Subscription;
   private subscriptionForQueryParams: Subscription;
+  private isLoginCorrectSubscription: Subscription;
 
   private queryParams: any;
 
@@ -44,9 +46,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onWaiting(){
     this.isLoading = true;
-    this.loginService.isLoginCorrectEmitter.subscribe(
-      isLoginCorrect => this.isLoading = false
-    );
   }
 
   ngOnInit() {
@@ -64,8 +63,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
 
     //Subscribing for the Login Errors
-    this.loginService.isLoginCorrectEmitter.subscribe(
-      isLoginCorrect => this.isLoginCorrect = isLoginCorrect
+    this.isLoginCorrectSubscription = this.loginService.isLoginCorrectEmitter.subscribe(
+      isLoginCorrect => {
+        this.isLoginCorrect = isLoginCorrect;
+        if (this.isLoginCorrect) {
+          this.isLoading = false;
+        }
+      }
     );
 
     this.subscriptionForQueryParams = this.route.queryParams.subscribe(
@@ -96,6 +100,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     //Removing body class when component is unloaded
     this.loginService.loginState(false);
 
+    this.isLoginCorrectSubscription.unsubscribe();
     this.subscriptionForAuthState.unsubscribe();
     this.subscriptionForQueryParams.unsubscribe();
   }

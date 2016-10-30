@@ -35,6 +35,7 @@ export class AddPostComponent implements OnInit, OnDestroy {
 
   isPostedSubscription: Subscription;
   isUpdatedSubscription: Subscription;
+  imageURLSubscription: Subscription;
 
   constructor(private transmitterService: TransmitterService, overlay: Overlay, vcRef: ViewContainerRef, public modal: Modal) {
     overlay.defaultViewContainer = vcRef;
@@ -73,7 +74,7 @@ export class AddPostComponent implements OnInit, OnDestroy {
     var image = this.fileInput.nativeElement.files[0];
     var imageName = this.fileInput.nativeElement.files[0].name;
     this.transmitterService.onImageUpload(image, imageName);
-    this.transmitterService.imageURLEmitter.subscribe(
+    this.imageURLSubscription = this.transmitterService.imageURLEmitter.subscribe(
       imageURL => {
         this.post.imageURL = imageURL;
       }
@@ -188,6 +189,7 @@ export class AddPostComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.isPostedSubscription.unsubscribe();
     this.isUpdatedSubscription.unsubscribe();
+    this.imageURLSubscription.unsubscribe();
   }
 
 }
