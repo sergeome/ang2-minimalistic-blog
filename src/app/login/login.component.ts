@@ -1,7 +1,7 @@
 import {Component, OnInit, OnDestroy} from "@angular/core";
 import {LoginService} from "../service/login.service";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 import {Subscription, Observable} from "rxjs";
 
 @Component({
@@ -24,24 +24,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   isLoading = false;
   private subscriptionForAuthState: Subscription;
+  private subscriptionForQueryParams: Subscription;
 
-  constructor(private loginService: LoginService, private router:Router) {
+  private queryParams: any;
+
+  constructor(private loginService: LoginService, private router:Router, private route: ActivatedRoute) {
     this.loginForm = new FormGroup({
       'email': new FormControl('', [
         Validators.required,
         Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]),
       'password': new FormControl('', Validators.required)
     });
-
-    //Subscribing for the Authentication state changing
-    this.subscriptionForAuthState = this.loginService.isAuthenticated().subscribe(
-      (authState) => {
-        this.isAuthenticated = authState;
-        if (authState){
-          this.onRedirect();
-        }
-      }
-    )
   }
 
   onLogin(){
@@ -60,16 +53,34 @@ export class LoginComponent implements OnInit, OnDestroy {
     //Adding body class when component is loaded
     this.loginService.loginState(true);
 
+    //Subscribing for the Authentication state changing
+    this.subscriptionForAuthState = this.loginService.isAuthenticated().subscribe(
+      (authState) => {
+        this.isAuthenticated = authState;
+        if (authState) {
+          this.onRedirect();
+        }
+      }
+    );
+
     //Subscribing for the Login Errors
     this.loginService.isLoginCorrectEmitter.subscribe(
       isLoginCorrect => this.isLoginCorrect = isLoginCorrect
+    );
+
+    this.subscriptionForQueryParams = this.route.queryParams.subscribe(
+      queryParams => this.queryParams = queryParams['page']
     );
   }
 
   onRedirect(){
     this.getRemainingTime();
-    setTimeout(x => {
-      this.router.navigate(['/']);
+    setTimeout( () => {
+      if (this.queryParams) {
+        this.router.navigate(['/' + this.queryParams]);
+      } else {
+        this.router.navigate(['/']);
+      }
     }, this.timerRemains);
   }
 
@@ -84,6 +95,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     //Removing body class when component is unloaded
     this.loginService.loginState(false);
+
+    this.subscriptionForAuthState.unsubscribe();
+    this.subscriptionForQueryParams.unsubscribe();
   }
 
 }

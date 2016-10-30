@@ -20,7 +20,7 @@ export class NotAuthorizedGuard implements CanActivate {
         }
         else if (this.isDirectAccess && !this.isAuthenticated) {
           this.isDirectAccess = false;
-          this.router.navigate(['/login']);
+          this.router.navigate(['/login'], {queryParams: {'page': 'addpost'}});
         }
       }
     )
