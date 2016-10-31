@@ -52,6 +52,7 @@ export class PostService{
     this.postsEmitter.emit(this.allPosts);
   }
 
+  //Navigating to the chosen post by clicking on the "Read More >" link
   setTargetPost(key) {
     for (var i = 0; i < this.allPosts.length; i++) {
       if (this.allPosts[i].key === key) {
