@@ -96,7 +96,9 @@ export class AddPostComponent implements OnInit, OnDestroy {
     this.onWaiting();
     this.post.title = this.postForm.value.title;
     this.post.content = this.postForm.value.content;
-    this.post.tags = this.postForm.value.tags.split(" ");
+    if (this.postForm.value.tags) {
+      this.post.tags = this.postForm.value.tags.split(" ");
+    }
     this.post.date = this.getToday();
     this.transmitterService.editPost(this.post);
   }
