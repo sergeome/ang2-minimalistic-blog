@@ -61,6 +61,7 @@ export class PostService{
     }
   }
 
+  //Receiving post when it was added asynchronously from "transmitterService" and pushing into all-posts component.
   getPostOnAdd(){
     this.transmitterService.addedPostEmitter.subscribe(
       (data) => {
