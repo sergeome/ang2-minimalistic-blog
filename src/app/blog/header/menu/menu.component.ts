@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from "@angular/core";
+import {Component, OnInit, OnDestroy, NgZone} from "@angular/core";
 import {Subscription} from "rxjs";
 import {LoginService} from "../../../service/login.service";
 import {Router} from "@angular/router";
@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   private isSignOutSubscription: Subscription;
   isAuthenticated: any;
 
-  constructor(private loginService: LoginService, private router:Router) {}
+  constructor(private loginService: LoginService, private router:Router, private ngZone: NgZone) {}
 
   onLogout(){
     this.loginService.onSignOut();
@@ -24,14 +24,20 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.loginService.isAuthenticated().subscribe(
-      authState => this.isAuthenticated = authState
+      authState => {
+        this.ngZone.run(() => {
+          this.isAuthenticated = authState;
+        })
+      }
     );
 
     this.isSignOutSubscription = this.loginService.isSignOutSuccessful.subscribe(
       signOutState => {
-        if(signOutState){
-          this.router.navigate(['/']);
-        }
+        this.ngZone.run(() => {
+          if (signOutState) {
+            this.router.navigate(['/']);
+          }
+        })
       }
     )
   }
