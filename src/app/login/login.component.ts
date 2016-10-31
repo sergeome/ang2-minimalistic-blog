@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy} from "@angular/core";
+import {Component, OnInit, OnDestroy, NgZone} from "@angular/core";
 import {LoginService} from "../service/login.service";
 import {FormGroup, FormControl, Validators} from "@angular/forms";
 import {Router, ActivatedRoute} from "@angular/router";
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private queryParams: any;
 
-  constructor(private loginService: LoginService, private router:Router, private route: ActivatedRoute) {
+  constructor(private loginService: LoginService, private router: Router, private route: ActivatedRoute, private ngZone: NgZone) {
     this.loginForm = new FormGroup({
       'email': new FormControl('', [
         Validators.required,
@@ -39,18 +39,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     });
   }
 
-  onLogin(){
+  onLogin() {
     this.onWaiting();
     this.loginService.onLogin(this.loginForm.value);
   }
 
-  onWaiting(){
+  onWaiting() {
     this.isLoading = true;
   }
 
-  onRedirect(){
+  onRedirect() {
     this.getRemainingTime();
-    setTimeout( () => {
+    setTimeout(() => {
       if (this.queryParams) {
         this.router.navigate(['/' + this.queryParams]);
       } else {
@@ -59,9 +59,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     }, this.timerRemains);
   }
 
-  getRemainingTime(){
-    let timer = Observable.timer(1000,1000);
-    timer.subscribe( t => {
+  getRemainingTime() {
+    let timer = Observable.timer(1000, 1000);
+    timer.subscribe(t => {
       this.timerRemains -= 1000;
     });
     this.timerRemains = this.redirectAfter;
@@ -69,34 +69,39 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     //Adding body class when component is loaded
-    this.loginService.loginState(true);
+    window.document.body.className = "login";
 
     //Subscribing for the Authentication state changing
     this.subscriptionForAuthState = this.loginService.isAuthenticated().subscribe(
       (authState) => {
+        this.ngZone.run(() => {
         this.isAuthenticated = authState;
         if (authState) {
           this.onRedirect();
         }
+        });
       }
     );
 
     //Subscribing for the Login Errors
     this.isLoginCorrectSubscription = this.loginService.isLoginCorrectEmitter.subscribe(
       isLoginCorrect => {
-        this.isLoginCorrect = isLoginCorrect;
-        this.isLoading = false;
+        this.ngZone.run(() => {
+          this.isLoginCorrect = isLoginCorrect;
+          this.isLoading = false;
+        });
       }
     );
 
     this.subscriptionForQueryParams = this.route.queryParams.subscribe(
       queryParams => this.queryParams = queryParams['page']
     );
+
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     //Removing body class when component is unloaded
-    this.loginService.loginState(false);
+    window.document.body.className = "";
 
     this.isLoginCorrectSubscription.unsubscribe();
     this.subscriptionForAuthState.unsubscribe();

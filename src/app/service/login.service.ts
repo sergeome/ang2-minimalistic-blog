@@ -9,13 +9,8 @@ export class LoginService {
 
   constructor() {}
 
-  loginEmitter = new EventEmitter<boolean>();
   isLoginCorrectEmitter = new EventEmitter<boolean>();
   isSignOutSuccessful = new EventEmitter<boolean>();
-
-  loginState( loginState ) {
-    this.loginEmitter.emit( loginState );
-  }
 
   onLogin( user: User ) {
     var self = this;

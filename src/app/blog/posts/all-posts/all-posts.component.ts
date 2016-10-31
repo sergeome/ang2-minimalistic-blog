@@ -1,4 +1,4 @@
-import {Component, OnInit, HostListener, OnDestroy} from "@angular/core";
+import {Component, OnInit, HostListener, OnDestroy, NgZone} from "@angular/core";
 import {TransmitterService} from "../../../service/transmitter.service";
 import {Post} from "../../../interfaces/post.interface";
 import {PostService} from "../../service/post.service";
@@ -24,9 +24,13 @@ export class AllPostsComponent implements OnInit, OnDestroy {
     date: ""
   };
 
+  zone: any;
+
   postEmitterSubscription: Subscription;
 
-  constructor(private transmitterService: TransmitterService, private postService: PostService) {}
+  constructor(private transmitterService: TransmitterService, private postService: PostService, zone: NgZone) {
+    this.zone = zone;
+  }
 
   @HostListener('window:scroll', ['$event'])
   doSomething(event) {
@@ -54,8 +58,10 @@ export class AllPostsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.postEmitterSubscription = this.postService.postsEmitter.subscribe(
       (data) => {
-        this.allPosts = this.getPreviewExcerpt(data);
-        this.loader = false;
+        this.zone.run( () => {
+          this.allPosts = this.getPreviewExcerpt(data);
+          this.loader = false;
+        } );
       }
     );
     this.postService.onGetPost();
