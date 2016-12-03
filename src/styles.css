@@ -33,11 +33,11 @@ ul li {
 }
 @font-face {
   font-family: "Gotham Bold";
-  src: url("/fonts/GOTHAM-BOLD.TTF");
+  src: url("/assets/fonts/GOTHAM-BOLD.TTF");
 }
 @font-face {
   font-family: "Gotham Thin";
-  src: url("/fonts/GOTHAM-THIN.TTF");
+  src: url("/assets/fonts/GOTHAM-THIN.TTF");
 }
 body {
   font-family: "Roboto", sans-serif;
@@ -113,10 +113,10 @@ header {
 .title h2:hover:before {
   content: " ";
   position: absolute;
-  background: url("/images/return.png") no-repeat top center;
+  background: url("/assets/images/return.png") no-repeat top center;
   width: 16px;
   height: 16px;
-  top: 0;
+  top: -3px;
   left: 0;
 }
 /*Search*/
@@ -125,7 +125,7 @@ header .search {
   margin: 14px 0 0 0;
 }
 header input[type="text"] {
-  background: url("/images/search.png") no-repeat right 3px;
+  background: url("/assets/images/search.png") no-repeat right 3px;
   color: #0d415c;
   border: none;
   outline: none;
@@ -271,7 +271,7 @@ ul.tags-list li a:hover {
 ul.tags-list li a:before {
   content: " ";
   position: absolute;
-  background: url("/images/tag.png") no-repeat top center;
+  background: url("/assets/images/tag.png") no-repeat top center;
   width: 16px;
   height: 16px;
   left: 5px;
@@ -296,7 +296,7 @@ ul.tags-list li a:before {
 .read-more:hover:after {
   content: " ";
   position: absolute;
-  background: url("/images/read-more-hover.png") no-repeat top center;
+  background: url("/assets/images/read-more-hover.png") no-repeat top center;
   width: 16px;
   height: 16px;
   right: 0;
@@ -442,7 +442,7 @@ footer {
 }
 .back {
   position: fixed;
-  background: url("/images/arrowup.png");
+  background: url("/assets/images/arrowup.png");
   width: 64px;
   height: 64px;
   right: 20px;

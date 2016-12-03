@@ -39,5 +39,5 @@ Thumbs.db
 /src/app/service/firebase.service.ts
 
 #fonts and images
-/src/fonts/*
-/src/images/*
+/src/assets/fonts/*
+/src/assets/images/*
