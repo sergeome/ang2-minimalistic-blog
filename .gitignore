@@ -37,7 +37,3 @@ Thumbs.db
 
 #firebase configuration hide
 /src/app/service/firebase.service.ts
-
-#fonts and images
-/src/assets/fonts/*
-/src/assets/images/*
