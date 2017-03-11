@@ -17,7 +17,7 @@ import {HomePageComponent} from "./blog/homepage/homepage.component";
 import {NotFoundComponent} from "./blog/not-found/not-found.component";
 import {NotAuthorizedGuard} from "./blog/not-authorized.guard";
 import {TransmitterService} from "./service/transmitter.service";
-import {FirebaseService} from "./service/firebase.service";
+import {FirebaseService} from "./service/firebase-dev.service";
 import {PostService} from "./blog/service/post.service";
 import {ModalModule} from "angular2-modal";
 import {BootstrapModalModule} from "angular2-modal/plugins/bootstrap";
