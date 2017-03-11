@@ -36,7 +36,8 @@ testem.log
 Thumbs.db
 
 #firebase configuration hide
-/src/app/service/firebase.service.ts
+/src/app/service/firebase-dev.service.ts
+/src/app/service/firebase-prod.service.ts
 
 #fonts and images
 /src/assets/fonts/*
