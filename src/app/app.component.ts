@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {LoginService} from "./service/login.service";
-import {FirebaseService} from "./service/firebase-dev.service";
+import {FirebaseService} from "./service/firebase.service";
 import {TransmitterService} from "./service/transmitter.service";
 import {PostService} from "./blog/service/post.service";
 
