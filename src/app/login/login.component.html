@@ -13,7 +13,7 @@
               placeholder="Password..."
               formControlName="password" >
       <button (click)="onLogin()" [disabled]="!loginForm.valid">login</button>
-      <button type="button" [routerLink]="['']" style="margin-top: 15px">Back to website</button>
+      <button type="button" [routerLink]="['']" style="margin-top: 15px">Back to blog</button>
       <p class="message" *ngIf="!isLoginCorrect">Invalid Login Or Password</p>
     </form>
     <div class="authorized" *ngIf="isAuthenticated">Login was successful!. You will be redirected in {{timerRemains.toString() | slice:0:1}} seconds...
